@@ -188,41 +188,24 @@ void Display_upcoming_matches()
 
 //check if user follow this team or not
 
-int c;
-
-bool check_team_infollow(string teamname)
+int check_team_infollow(string teamname)
 {
-    bool check1 = false;
     for (int i = 0; i < followCount; i++)
     {
         if (teamname == follow[i].teamName && currentLoggedInUser == follow[i].username)
         {
-            check1 = true;
-            c = i;
-            break;
+            return i;
         }
     }
-
-    if (check1)
-    {
-        return true;
-    }
-
-    else
-    {
-        return false;
-    }
-
-
+    return -1;
 }
-
-
 
 
 // function to unfollow
 
 void unfollow_team()
 {
+
     cout << "please enter the team which you want to unfollow\n";
     string team_name_for_unfollow;
     cin.ignore(1, '\n');
@@ -230,8 +213,8 @@ void unfollow_team()
 
     do {
         bool team_is_true = false;
-
         getline(cin, team_name_for_unfollow);
+
 
         for (int q = 0; q < 20; q++)
         {
@@ -248,9 +231,11 @@ void unfollow_team()
             continue;
         }
 
-        if (check_team_infollow(team_name_for_unfollow) && team_is_true)
+        int number_team_in_follow_list = check_team_infollow(team_name_for_unfollow);
+
+        if (number_team_in_follow_list != -1 && team_is_true)
         {
-            for (int j = c; j < followCount - 1; j++)
+            for (int j = number_team_in_follow_list; j < followCount - 1; j++)
             {
                 follow[j].teamName = follow[j + 1].teamName;
                 follow[j].username = follow[j + 1].username;
