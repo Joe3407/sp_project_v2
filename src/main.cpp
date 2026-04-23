@@ -186,7 +186,90 @@ void Display_upcoming_matches()
 }
 
 
+//check if user follow this team or not
 
+int c;
+
+bool check_team_infollow(string teamname)
+{
+    bool check1 = false;
+    for (int i = 0; i < followCount; i++)
+    {
+        if (teamname == follow[i].teamName && currentLoggedInUser == follow[i].username)
+        {
+            check1 = true;
+            c = i;
+            break;
+        }
+    }
+
+    if (check1)
+    {
+        return true;
+    }
+
+    else
+    {
+        return false;
+    }
+
+
+}
+
+
+
+
+// function to unfollow
+
+void unfollow_team()
+{
+    cout << "please enter the team which you want to unfollow\n";
+    string team_name_for_unfollow;
+    cin.ignore(1, '\n');
+    bool check2 = false;
+
+    do {
+        bool team_is_true = false;
+
+        getline(cin, team_name_for_unfollow);
+
+        for (int q = 0; q < 20; q++)
+        {
+            if (team_name_for_unfollow == teams[q].name)
+            {
+                team_is_true = true;
+                break;
+            }
+        }
+
+        if (team_is_true == false)
+        {
+            cout << " wrong name :( \n";
+            continue;
+        }
+
+        if (check_team_infollow(team_name_for_unfollow) && team_is_true)
+        {
+            for (int j = c; j < followCount - 1; j++)
+            {
+                follow[j].teamName = follow[j + 1].teamName;
+                follow[j].username = follow[j + 1].username;
+            }
+
+            followCount--;
+            cout << "You are no longer following " << team_name_for_unfollow << "." << endl;
+            check2 = true;
+        }
+
+        else
+        {
+            cout << "this team does not exist in follow list\n";
+            cout << "please enter another team\n";
+            check2 = false;
+        }
+
+    } while (check2 == false);
+}
 
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
