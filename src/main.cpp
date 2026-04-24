@@ -5,7 +5,7 @@
 #include <iomanip>  // for function "setw"
 #include <limits>   // for user input more than the amount needed
 #include <cctype>   // for tolower 
-
+#include <algorithm> // for swap
 using namespace std ;
 //------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 //Ibrahim :
@@ -510,6 +510,53 @@ bool matchfound = false ;
 
 
 
+///////////////////////////////////league leaderboard function defenition (extra function)
+void leagueleaderboard(){
+
+
+
+
+for (int i = 0 ; i < teamsCount-1  ; i++){
+
+    for (int j = 0 ; j < teamsCount-i-1 ; j++){
+
+       if( teams[j].totalPoints < teams[j+1].totalPoints)
+
+         swap(teams[j] , teams[j+1]) ;
+         
+    }
+    
+}
+
+
+    
+cout << "========================================================"<<endl;
+    cout << "                  🏆 LEAGUE LEADERBOARD 🏆                  "<<endl;
+    cout << "========================================================"<<endl;
+   
+    cout << left << setw(10) << "Rank" 
+         << setw(20) << "Team Name" 
+         << setw(15) << "Points" 
+         << setw(10) << "Titles" << endl;
+    cout << "--------------------------------------------------------"<<endl;
+
+    
+    for (int i = 0; i < teamsCount; i++) {
+        cout << left << setw(10) << (i + 1)            
+             << setw(20) << teams[i].name 
+             << setw(15) << teams[i].totalPoints 
+             << setw(10) << teams[i].titles << endl;
+    }
+    cout << "========================================================"<<endl;
+
+
+
+
+
+
+}
+
+
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 // Joe 
 
@@ -862,7 +909,17 @@ void AdminMenu() {
 
 void UserMenu() {
     int ChoiceUser;
-    cout<< "What would you like to do? Press 1 to follow a team ,2 to view only a certain team's matches ,3 to display your currently followed match , 4 to view all games , 5 to view past games , 6 to view upcoming games and 7 to logout"<<endl;
+
+    cout << "--- What would you like to do? ---"<<endl
+     << "1. Follow a team"<<endl
+     << "2. View a specific team's matches"<<endl
+     << "3. Display your followed matches feed"<<endl
+     << "4. View all games"<<endl
+     << "5. View past games"<<endl
+     << "6. View upcoming games"<<endl
+     << "7. View league leaderboard"<<endl
+     << "8. Logout"<<endl;
+    
     while(true) {
         cin>>ChoiceUser;
 
@@ -887,9 +944,14 @@ void UserMenu() {
 
         }
         if (ChoiceUser==7){
+            leagueleaderboard();
+            }
+            
+        if (ChoiceUser==8){
             Logout();
             break;
             }
+
     }
 }
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------
