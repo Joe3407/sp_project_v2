@@ -529,3 +529,10 @@ FodyWeavers.xsd
 # Additional files built by Visual Studio
 
 # End of https://www.toptal.com/developers/gitignore/api/clion,visualstudio,visualstudiocode
+
+
+
+# My local Visual Studio project files
+*.sln
+*.vcxproj
+*.vcxproj.*
