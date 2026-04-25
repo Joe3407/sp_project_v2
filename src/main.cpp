@@ -828,12 +828,15 @@ void FollowTeam() {
 }
 
 void FilterMatchesByTeam() {
-    cout<<"Which team do you want to view their matches ?"<<" ";
+    cout<<"Which team do you want to view their matches ? (Or Enter 0 to return to main menu again):"<<" ";
     string ChosenTeam;
     bool TeamExists = false;
     cin.ignore(numeric_limits<streamsize>::max(), '\n');
     do{
         getline(cin,ChosenTeam);
+        if (ChosenTeam=="0") {
+            break;
+        }
             for (int i = 0; i <20; i++) {
             if (ChosenTeam==teams[i].name) {
                 TeamExists = true;
