@@ -919,13 +919,14 @@ void UserMenu() {
     while(true) {
         cout << "--- What would you like to do? ---"<<endl
     << "1. Follow a team"<<endl
-    << "2. View a specific team's matches"<<endl
-    << "3. Display your followed matches feed"<<endl
-    << "4. View all games"<<endl
-    << "5. View past games"<<endl
-    << "6. View upcoming games"<<endl
-    << "7. View league leaderboard"<<endl
-    << "8. Logout"<<endl;
+    << "2.Unfollow a team"<<endl
+    << "3. View a specific team's matches"<<endl
+    << "4. Display your followed matches feed"<<endl
+    << "5. View all games"<<endl
+    << "6. View past games"<<endl
+    << "7. View upcoming games"<<endl
+    << "8. View league leaderboard"<<endl
+    << "9. Logout"<<endl;
         cin>>ChoiceUser;
 
         if (ChoiceUser==1){
