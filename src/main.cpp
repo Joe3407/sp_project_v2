@@ -799,12 +799,15 @@ void gameoftheweek() {//extra function
 //--------------------------------------------------------------
 //Muhammad
 void FollowTeam() {
-    cout<<"Please enter the name of the team you want to follow : "<<endl;
+    cout<<"Please enter the name of the team you want to follow (Or Enter 0 to return to main menu again): "<<endl;
     string TeamName;
     bool TeamExists=false;
     cin.ignore(numeric_limits<streamsize>::max(), '\n');
     do{
         getline(cin,TeamName);
+        if (TeamName =="0") {
+            break;
+        }
         for (int i = 0; i <20; i++) {
             if (TeamName==teams[i].name) {
                 TeamExists=true;
@@ -817,7 +820,7 @@ void FollowTeam() {
             }
         }
         if (TeamExists==false) {
-            cout<<"Team doesn't exist , Please make sure you entered the correct name and try again "<<endl;
+            cout<<"Team doesn't exist ,Please make sure you entered the correct name and try again (Or Enter 0 to return to main menu again) "<<endl;
         }
 
 
