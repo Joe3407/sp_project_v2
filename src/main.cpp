@@ -888,9 +888,9 @@ void AdminMenu() {
     int ChoiceAdmin;
     while(true) {
         cout << "--- What would you like to do? ---"<<endl
-        <<"1. Add a team"
-        <<"2. Add an upcoming match"
-        <<"3. Update match results  "
+        <<"1. Add a team"<<endl
+        <<"2. Add an upcoming match"<<endl
+        <<"3. Update match results "<<endl
         <<"4. to logout"<<endl;
         cin>>ChoiceAdmin;
         if (ChoiceAdmin==1){
