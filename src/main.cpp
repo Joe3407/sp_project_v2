@@ -886,8 +886,12 @@ bool AskToContinue() {
 
 void AdminMenu() {
     int ChoiceAdmin;
-    cout<<"What would you like to do? Press 1 to add a team,2 add an upcoming match ,3 Update match results , 4 to logout"<<endl;
     while(true) {
+        cout << "--- What would you like to do? ---"<<endl
+        <<"1. Add a team"
+        <<"2. Add an upcoming match"
+        <<"3. Update match results  "
+        <<"4. to logout"<<endl;
         cin>>ChoiceAdmin;
         if (ChoiceAdmin==1){
             AddTeam();
@@ -910,17 +914,18 @@ void AdminMenu() {
 void UserMenu() {
     int ChoiceUser;
 
-    cout << "--- What would you like to do? ---"<<endl
-     << "1. Follow a team"<<endl
-     << "2. View a specific team's matches"<<endl
-     << "3. Display your followed matches feed"<<endl
-     << "4. View all games"<<endl
-     << "5. View past games"<<endl
-     << "6. View upcoming games"<<endl
-     << "7. View league leaderboard"<<endl
-     << "8. Logout"<<endl;
+
     
     while(true) {
+        cout << "--- What would you like to do? ---"<<endl
+    << "1. Follow a team"<<endl
+    << "2. View a specific team's matches"<<endl
+    << "3. Display your followed matches feed"<<endl
+    << "4. View all games"<<endl
+    << "5. View past games"<<endl
+    << "6. View upcoming games"<<endl
+    << "7. View league leaderboard"<<endl
+    << "8. Logout"<<endl;
         cin>>ChoiceUser;
 
         if (ChoiceUser==1){
