@@ -934,26 +934,30 @@ void UserMenu() {
          }
 
         if (ChoiceUser==2){
-            FilterMatchesByTeam();
+            unfollow_team();
             }
         if (ChoiceUser==3) {
-            displayfollowedmatch();
+            FilterMatchesByTeam();
         }
         if (ChoiceUser==4) {
-            Display_All_Matches();
+            displayfollowedmatch();
         }
         if (ChoiceUser==5) {
-            Display_past_matches();
+            Display_All_Matches();
         }
         if (ChoiceUser==6) {
-            Display_upcoming_matches();
+            Display_past_matches();
 
         }
         if (ChoiceUser==7){
-            leagueleaderboard();
+            Display_upcoming_matches();
             }
+
+        if (ChoiceUser==8) {
+            leagueleaderboard();
+        }
             
-        if (ChoiceUser==8){
+        if (ChoiceUser==9){
             Logout();
             break;
             }
