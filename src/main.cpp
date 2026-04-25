@@ -919,7 +919,7 @@ void UserMenu() {
     while(true) {
         cout << "--- What would you like to do? ---"<<endl
     << "1. Follow a team"<<endl
-    << "2.Unfollow a team"<<endl
+    << "2. Unfollow a team"<<endl
     << "3. View a specific team's matches"<<endl
     << "4. Display your followed matches feed"<<endl
     << "5. View all games"<<endl
