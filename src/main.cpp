@@ -853,7 +853,7 @@ void FilterMatchesByTeam() {
                 }break;
             }
 
-        }  if (TeamExists==false) cout<<"Invalid team name , please check the team name and try again"<< " ";
+        }  if (TeamExists==false) cout<<"Invalid team name , please check the team name and try again (Or Enter 0 to return to main menu again):"<< " ";
 
 
 
