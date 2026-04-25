@@ -812,8 +812,8 @@ void FollowTeam() {
                     follow[followCount].username=currentLoggedInUser;
                     follow[followCount].teamName=TeamName;
                     followCount++;
+                    cout<<"You are now following "<<" "<<TeamName<<endl;
                 }
-                cout<<"You are now following "<<" "<<TeamName<<endl;
             }
         }
         if (TeamExists==false) {
