@@ -131,11 +131,11 @@ void Display_All_Matches()
         if (matches[i].status == "upcoming" || matches[i].status == "past")
         {
             cout << "------------------------------------------------------\n";
-            cout << "           " << setw(15) << matches[i].status << endl;
-            cout << "           " << matches[i].team1 << setw(25) << matches[i].team2 << endl;
-            cout << "           " << setw(3) << matches[i].score1 << setw(24) << matches[i].score2 << endl;
-            cout << "           " << setw(15) << matches[i].time << endl;
-            cout << "           " << setw(17) << matches[i].date << endl;
+            cout << "status:                        " << matches[i].status << endl;
+            cout << "teams name:       " << matches[i].team1 << "                 " << matches[i].team2 << endl;
+            cout << "score:                " << matches[i].score1 << "                      " << matches[i].score2 << endl;
+            cout << "time:                         " << matches[i].time << endl;
+            cout << "date:                        " << matches[i].date << endl;
             cout << "------------------------------------------------------\n\n";
 
         }
@@ -153,11 +153,11 @@ void Display_past_matches()
         if (matches[i].status == "past")
         {
             cout << "------------------------------------------------------\n";
-            cout << "           " << setw(15) << matches[i].status << endl;
-            cout << "           " << matches[i].team1 << setw(25) << matches[i].team2 << endl;
-            cout << "           " << setw(3) << matches[i].score1 << setw(24) << matches[i].score2 << endl;
-            cout << "           " << setw(15) << matches[i].time << endl;
-            cout << "           " << setw(17) << matches[i].date << endl;
+            cout << "status:                        " << matches[i].status << endl;
+            cout << "teams name:       " << matches[i].team1 << "                 " << matches[i].team2 << endl;
+            cout << "score:                " << matches[i].score1 << "                      " << matches[i].score2 << endl;
+            cout << "time:                         " << matches[i].time << endl;
+            cout << "date:                        " << matches[i].date << endl;
             cout << "------------------------------------------------------\n\n";
         }
     }
@@ -175,11 +175,11 @@ void Display_upcoming_matches()
         if (matches[i].status == "upcoming")
         {
             cout << "------------------------------------------------------\n";
-            cout << "           " << setw(15) << matches[i].status << endl;
-            cout << "           " << matches[i].team1 << setw(25) << matches[i].team2 << endl;
-            cout << "           " << setw(3) << matches[i].score1 << setw(24) << matches[i].score2 << endl;
-            cout << "           " << setw(15) << matches[i].time << endl;
-            cout << "           " << setw(17) << matches[i].date << endl;
+            cout << "status:                        " << matches[i].status << endl;
+            cout << "teams name:       " << matches[i].team1 << "                 " << matches[i].team2 << endl;
+            cout << "score:                " << matches[i].score1 << "                      " << matches[i].score2 << endl;
+            cout << "time:                         " << matches[i].time << endl;
+            cout << "date:                        " << matches[i].date << endl;
             cout << "------------------------------------------------------\n\n";
         }
     }
