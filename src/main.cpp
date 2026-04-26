@@ -213,6 +213,7 @@ void unfollow_team()
 
     do {
         bool team_is_true = false;
+        cin.ignore(1,'\n');
         getline(cin, team_name_for_unfollow);
 
 
@@ -224,12 +225,25 @@ void unfollow_team()
                 break;
             }
         }
+        string options;
 
         if (team_is_true == false)
         {
+            cout << "******************\n";
             cout << " wrong name :( \n";
+            cout << "******************\n";
+
+            cout << "if you want to rewrite the team name press \"r\"   (if not enter any thing)\n";
+            cin >> options;
+        }
+
+        if (options == "r" || options == "R")
+        {
+            cout << "please enter the team which you want to unfollow\n";
             continue;
         }
+        else { break; }
+
 
         int number_team_in_follow_list = check_team_infollow(team_name_for_unfollow);
 
