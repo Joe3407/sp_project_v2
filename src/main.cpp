@@ -6,6 +6,8 @@
 #include <limits>   // for user input more than the amount needed
 #include <cctype>   // for tolower 
 #include <algorithm> // for swap
+#include <ctime>   // Necessary for time()
+#include <cstdlib> // Necessary for rand() and srand()
 using namespace std ;
 //------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 //Ibrahim :
@@ -769,10 +771,10 @@ void displayfollowedmatch() {
         for (int i = 0; i < matchesCount; i++) {
             for (int z=0; z<10; z++) {//loop through matches and display followed  matches only
                 if (matches[i].team1==followtemp[z]||matches[i].team2==followtemp[z]) {
-                    cout<<matches[i].team1<<" "<<matches[i].score1<<"\t"<<"v.s\t"<<matches[i].score2<<matches[i].team2<<endl;
-                    cout<<"\t"<<"Date is : "<<matches[i].date;
-                    cout<<"\t"<<"time is : "<<matches[i].time;
-                    cout<<"\t"<<"stadium is : \n";
+                    cout<<"\t"<<matches[i].team1<<" "<<matches[i].score1<<"\t"<<"v.s\t"<<matches[i].score2<<matches[i].team2<<endl;
+                    cout<<"\t\t"<<"Date is : "<<matches[i].date<<endl;
+                    cout<<"\t\t"<<"time is : "<<matches[i].time<<endl;
+                
                     break;
                 }
             }
@@ -781,12 +783,14 @@ void displayfollowedmatch() {
         for (int i = 0; i < 10; i++) {
             for (int z=0; z<20; z++) {//loop through all teams to get followed 
                  if (followtemp[i]==teams[z].name) {//display data
+                    if(followtemp[i]=="")continue;
+                    else{
                      cout<<"team name is  "<<teams[z].name<<endl;
                      cout<<"coach name is "<<teams[z].coach<<endl;
                      cout<<"Total points : "<<teams[z].totalPoints<<endl;
                      if (teams[z].titles==0) cout<<"You have no titles better luck with coach "<<teams[z].coach<<endl;
                      else cout<<"Total titles : "<<teams[z].titles<<endl;
-                     break;
+                     break;}
                  }
             }
         }
@@ -806,8 +810,7 @@ void gameoftheweek() {//extra function
     cout<<matches[matchhnum].team1<<" "<<matches[matchhnum].score1<<"\t"<<"v.s\t"<<matches[matchhnum].team2<<" "<<matches[matchhnum].score2<<endl;
     cout<<"\t"<<"status is : "<<matches[matchhnum].status<<endl;
     cout<<"\t"<<"Date is : "<<matches[matchhnum].date<<endl;
-    cout<<"\t"<<"stadium is : \n";
-    cout<<"\t"<<"refree is : \n";
+    
     cout << "******************************************" << endl;
 }
 //--------------------------------------------------------------
@@ -986,6 +989,7 @@ void UserMenu() {
 }
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 int main() {
+   srand(static_cast<unsigned int>(time(0)));
     LoadData();
     cout<<"Welcome to CounterAttack , The number 1 app for all Football team  news regarding your favorite teams and world-wide football"<<endl;
     gameoftheweek();
