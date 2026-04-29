@@ -8,7 +8,7 @@
 #include <algorithm> // for swap
 #include <ctime>   // Necessary for time()
 #include <cstdlib> // Necessary for rand() and srand()
-using namespace std ;
+using namespace std;
 //------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 //Ibrahim :
 
@@ -210,7 +210,6 @@ void unfollow_team()
 
     cout << "please enter the team which you want to unfollow\n";
     string team_name_for_unfollow;
-    cin.ignore(1, '\n');
     bool check2 = false;
 
     do {
@@ -227,7 +226,7 @@ void unfollow_team()
                 break;
             }
         }
-        string options;
+        string options1;
 
         if (team_is_true == false)
         {
@@ -236,21 +235,24 @@ void unfollow_team()
             cout << "******************\n";
 
             cout << "if you want to rewrite the team name press \"r\"   (if not enter any thing)\n";
-            cin >> options;
+            cin >> options1;
+            if (options1 == "r" || options1 == "R")
+            {
+                cout << "please enter the team which you want to unfollow\n";
+                continue;
+            }
+        else { break; }
         }
 
-        if (options == "r" || options == "R")
-        {
-            cout << "please enter the team which you want to unfollow\n";
-            continue;
-        }
-        else { break; }
+       
 
 
         int number_team_in_follow_list = check_team_infollow(team_name_for_unfollow);
 
         if (number_team_in_follow_list != -1 && team_is_true)
         {
+            follow[number_team_in_follow_list].teamName = "";
+            follow[number_team_in_follow_list].username = "";
             for (int j = number_team_in_follow_list; j < followCount - 1; j++)
             {
                 follow[j].teamName = follow[j + 1].teamName;
@@ -265,10 +267,18 @@ void unfollow_team()
         else
         {
             cout << "this team does not exist in follow list\n";
-            cout << "please enter another team\n";
-            check2 = false;
+            cout << "if you want to rewrite another team press \"r\"      (press \"x\" to exit )\n";
+            string options2;
+            cin >> options2;
+            if (options2 == "r" || options2 == "R")
+            {
+                check2 = false;
+            }
+            else
+            {
+                check2 = true;
+            }
         }
-
     } while (check2 == false);
 }
 
