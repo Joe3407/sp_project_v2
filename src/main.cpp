@@ -1,10 +1,10 @@
 #include <iostream>
 #include <fstream>
-#include <string> 
-#include <conio.h>  // for password 
+#include <string>
+#include <conio.h>  // for password
 #include <iomanip>  // for function "setw"
 #include <limits>   // for user input more than the amount needed
-#include <cctype>   // for tolower 
+#include <cctype>   // for tolower
 #include <algorithm> // for swap
 #include <ctime>   // Necessary for time()
 #include <cstdlib> // Necessary for rand() and srand()
@@ -12,7 +12,7 @@ using namespace std;
 //------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 //Ibrahim :
 
-// Declaring Structs and Variables 
+// Declaring Structs and Variables
 struct User{
     string username;
     string password;
@@ -28,11 +28,11 @@ struct Team{
 struct Match {
     string team1;
     string team2;
-    string date;   
-    string status; 
+    string date;
+    string status;
     string time;
-    int score1;   
-    int score2;    
+    int score1;
+    int score2;
 };
 struct Follow{
     string username;
@@ -40,18 +40,18 @@ struct Follow{
 };
 User users[100];
 int usersCount = 0;
-Team teams[20]; 
+Team teams[20];
 int teamsCount = 0;
 Match matches[200];
 int matchesCount = 0;
-Follow follow[200];
+Follow follow[2000];
 int followCount = 0 ;
 string currentLoggedInUser = "";
 string currentUserRole = "";
 
-// Defining Functions 
+// Defining Functions
 void SaveData(){
-    // Saving Teams 
+    // Saving Teams
     ofstream teamFile("teams.txt");
     for (int i = 0; i < teamsCount; i++){
         teamFile << teams[i].name << " " << teams[i].coach << " " << teams[i].totalPoints << " " << teams[i].titles << endl;
@@ -65,10 +65,10 @@ void SaveData(){
     }
     userFile.close();
 
-    // Saving Matches 
+    // Saving Matches
     ofstream matchFile("matches.txt");
     for (int i = 0; i < matchesCount; i++){
-        matchFile << matches[i].team1 << " " << matches[i].team2 << " " << matches[i].date << " " << matches[i].status << " " << matches[i].time << " " << matches[i].score1 << " " << matches[i].score2 << endl; 
+        matchFile << matches[i].team1 << " " << matches[i].team2 << " " << matches[i].date << " " << matches[i].status << " " << matches[i].time << " " << matches[i].score1 << " " << matches[i].score2 << endl;
     }
     matchFile.close();
 
@@ -81,9 +81,9 @@ void SaveData(){
 }
 
 void LoadData() {
-    // Loading Teams 
+    // Loading Teams
     ifstream teamFile("teams.txt");
-    if (teamFile.is_open()) { 
+    if (teamFile.is_open()) {
         while (teamFile >> teams[teamsCount].name >> teams[teamsCount].coach >> teams[teamsCount].totalPoints >> teams[teamsCount].titles) {
             teamsCount++;
         }
@@ -99,7 +99,7 @@ void LoadData() {
         userFile.close();
     }
 
-    // Loading Matches 
+    // Loading Matches
     ifstream matchFile("matches.txt");
     if (matchFile.is_open()) {
         while (matchFile >> matches[matchesCount].team1 >> matches[matchesCount].team2 >> matches[matchesCount].date >> matches[matchesCount].status >> matches[matchesCount].time >>matches[matchesCount].score1 >> matches[matchesCount].score2) {
@@ -117,7 +117,24 @@ void LoadData() {
         followFile.close();
     }
 }
-//-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+//--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+//Muhammad
+void AddUnderScore(string& TeamName) {
+    for (int i=0 ; i<TeamName.length(); i++) {
+        if (TeamName[i]==' ') {
+            TeamName[i]='_';
+        }
+    }
+}
+void RemoveUnderScore(string& TeamName) {
+    for (int i=0 ; i<TeamName.length(); i++) {
+        if (TeamName[i]=='_') {
+            TeamName[i]=' ';
+        }
+    }
+
+}
 // --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 // Hassan Badr
 
@@ -218,7 +235,7 @@ void unfollow_team()
         getline(cin, team_name_for_unfollow);
 
 
-        for (int q = 0; q < 20; q++)
+        for (int q = 0; q < teamsCount; q++)
         {
             if (team_name_for_unfollow == teams[q].name)
             {
@@ -244,7 +261,7 @@ void unfollow_team()
         else { break; }
         }
 
-       
+
 
 
         int number_team_in_follow_list = check_team_infollow(team_name_for_unfollow);
@@ -329,7 +346,6 @@ void AddTeam()
         cout << "Enter the new team's coach's name: " << endl;
         getline(cin, teams[teamsCount].coach);
         teamsCount++;
-
         cout << "Team " << newTeamName << " added" << endl;
 
         cout << "Do you want to add another team? (y/n)" << endl;
@@ -338,6 +354,7 @@ void AddTeam()
             return;
     }
 }
+
 
 void AddUpcomingMatch()
 {
@@ -431,7 +448,7 @@ void AddUpcomingMatch()
 
 //////////////////////////////////////// update match result (function definition)
 void UpdateMatchResult(){
-    
+
 /////////////////////////////////////// print the upcoming matches
     cout<<"update match results"<<endl;
     bool upcoming = false ;
@@ -439,7 +456,7 @@ void UpdateMatchResult(){
       for ( int i = 0 ; i < matchesCount ; i++ ){
 
         if( matches[i].status == "upcoming" ){
-            cout<<matches[i].team1<<" "<<matches[i].team2<<" "<<matches[i].date<<" "<<matches[i].time<<endl;         
+            cout<<matches[i].team1<<" "<<matches[i].team2<<" "<<matches[i].date<<" "<<matches[i].time<<endl;
               upcoming = true ;
         }
     }
@@ -465,44 +482,44 @@ cout<<"enter team 2"<<endl;
 getline(cin, input_team2);
 
 
-//////////////////// search for the match 
+//////////////////// search for the match
 bool matchfound = false ;
 
-    for ( int i = 0 ; i < matchesCount ; i++ ){  
+    for ( int i = 0 ; i < matchesCount ; i++ ){
 
-        if (((matches[i].team1 == input_team1 && matches[i].team2 == input_team2) || 
+        if (((matches[i].team1 == input_team1 && matches[i].team2 == input_team2) ||
 
-        (matches[i].team1 == input_team2 && matches[i].team2 == input_team1)) && 
+        (matches[i].team1 == input_team2 && matches[i].team2 == input_team1)) &&
 
         matches[i].status == "upcoming"){
 
           cout<<"Match found!"<<endl;
           cout<<"Enter final score for "<< matches[i].team1<<endl;
-          cin>>matches[i].score1;    
+          cin>>matches[i].score1;
 
           cout<<"Enter final score for "<< matches[i].team2<<endl;
           cin>>matches[i].score2;
 
-          matches[i].status = "past";  
-          
+          matches[i].status = "past";
+
             if (matches[i].score1 > matches[i].score2){  /////////// Team 1 wins
 
 
               for (int j = 0; j < teamsCount; j++) {
 
-                if (teams[j].name == matches[i].team1) 
+                if (teams[j].name == matches[i].team1)
                 teams[j].totalPoints += 3;
 
                 }
-            } 
+            }
             else if (matches[i].score2 > matches[i].score1){ /////////// Team 2 wins
-    
+
                 for (int j = 0; j < teamsCount; j++){
 
-                  if (teams[j].name == matches[i].team2) 
+                  if (teams[j].name == matches[i].team2)
                   teams[j].totalPoints += 3;
-    
-                }   
+
+                }
             }
 
             else { /////////// draw
@@ -549,28 +566,28 @@ for (int i = 0 ; i < teamsCount-1  ; i++){
        if( teams[j].totalPoints < teams[j+1].totalPoints)
 
          swap(teams[j] , teams[j+1]) ;
-         
+
     }
-    
+
 }
 
 
-    
+
 cout << "========================================================"<<endl;
     cout << "                  🏆 LEAGUE LEADERBOARD 🏆                  "<<endl;
     cout << "========================================================"<<endl;
-   
-    cout << left << setw(10) << "Rank" 
-         << setw(20) << "Team Name" 
-         << setw(15) << "Points" 
+
+    cout << left << setw(10) << "Rank"
+         << setw(20) << "Team Name"
+         << setw(15) << "Points"
          << setw(10) << "Titles" << endl;
     cout << "--------------------------------------------------------"<<endl;
 
-    
+
     for (int i = 0; i < teamsCount; i++) {
-        cout << left << setw(10) << (i + 1)            
-             << setw(20) << teams[i].name 
-             << setw(15) << teams[i].totalPoints 
+        cout << left << setw(10) << (i + 1)
+             << setw(20) << teams[i].name
+             << setw(15) << teams[i].totalPoints
              << setw(10) << teams[i].titles << endl;
     }
     cout << "========================================================"<<endl;
@@ -584,7 +601,7 @@ cout << "========================================================"<<endl;
 
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-// Joe 
+// Joe
 
 string inputPassword() {
     string password = "";
@@ -622,7 +639,7 @@ void Register() {
     }
 
     // SAFETYCHECK
-    cin.ignore(numeric_limits<streamsize>::max(), '\n'); // ignores everything till it finds \n 
+    cin.ignore(numeric_limits<streamsize>::max(), '\n'); // ignores everything till it finds \n
 
     // USERNAME
     while (true) {
@@ -784,14 +801,14 @@ void displayfollowedmatch() {
                     cout<<"\t"<<matches[i].team1<<" "<<matches[i].score1<<"\t"<<"v.s\t"<<matches[i].score2<<matches[i].team2<<endl;
                     cout<<"\t\t"<<"Date is : "<<matches[i].date<<endl;
                     cout<<"\t\t"<<"time is : "<<matches[i].time<<endl;
-                
+
                     break;
                 }
             }
         }
         cout<<"**********************    Feed for fav Teams  ****************\n";
         for (int i = 0; i < 10; i++) {
-            for (int z=0; z<20; z++) {//loop through all teams to get followed 
+            for (int z=0; z<20; z++) {//loop through all teams to get followed
                  if (followtemp[i]==teams[z].name) {//display data
                     if(followtemp[i]=="")continue;
                     else{
@@ -820,7 +837,7 @@ void gameoftheweek() {//extra function
     cout<<matches[matchhnum].team1<<" "<<matches[matchhnum].score1<<"\t"<<"v.s\t"<<matches[matchhnum].team2<<" "<<matches[matchhnum].score2<<endl;
     cout<<"\t"<<"status is : "<<matches[matchhnum].status<<endl;
     cout<<"\t"<<"Date is : "<<matches[matchhnum].date<<endl;
-    
+
     cout << "******************************************" << endl;
 }
 //--------------------------------------------------------------
@@ -832,16 +849,22 @@ void FollowTeam() {
     cin.ignore(numeric_limits<streamsize>::max(), '\n');
     do{
         getline(cin,TeamName);
+       AddUnderScore(TeamName);
         if (TeamName =="0") {
             break;
         }
-        for (int i = 0; i <20; i++) {
+        for (int i = 0; i <teamsCount; i++) {
             if (TeamName==teams[i].name) {
                 TeamExists=true;
+                if (check_team_infollow(TeamName)!=-1) {
+                    cout<<"You are already following this team "<<endl;
+                    break;
+                }
                 if (followCount<200) {
                     follow[followCount].username=currentLoggedInUser;
                     follow[followCount].teamName=TeamName;
                     followCount++;
+                    RemoveUnderScore(TeamName);
                     cout<<"You are now following "<<" "<<TeamName<<endl;
                 }
             }
@@ -868,7 +891,7 @@ void FilterMatchesByTeam() {
             if (ChosenTeam==teams[i].name) {
                 TeamExists = true;
                 cout<<"Here are the matches of "<<" "<<ChosenTeam<<" "<< ":"<<endl;
-                for (int j = 0;j<200;j++) {
+                for (int j = 0;j<matchesCount;j++) {
                     if (ChosenTeam==matches[j].team1 || ChosenTeam==matches[j].team2) {
                         cout<<"Date : "<<matches[j].date<<endl;
                         cout<<matches[j].team1 <<" "<<"Vs"<<" "<<matches[j].team2;
@@ -887,13 +910,13 @@ void FilterMatchesByTeam() {
     }while (TeamExists == false);
 }
 
-int MainMenuOption() {
+string MainMenuOption() {
     cout<<"Press 1 to Sign up."<<endl;
     cout<<"Already have an account ? Press 2 to sign in. "<<endl;
-    int result;
+    string result;
     while (true) {
         cin>>result;
-        if (result == 1||result==2) {
+        if (result == "1"||result=="2") {
             return result;
         }   cout<<"Incorrect option , please Try again "<<endl;
         cout<<"Are you a user ? Press 1 to sign in to your account"<<endl;
@@ -948,7 +971,7 @@ void UserMenu() {
     int ChoiceUser;
 
 
-    
+
     while(true) {
         cout << "--- What would you like to do? ---"<<endl
     << "1. Follow a team"<<endl
@@ -989,7 +1012,7 @@ void UserMenu() {
         if (ChoiceUser==8) {
             leagueleaderboard();
         }
-            
+
         if (ChoiceUser==9){
             Logout();
             break;
@@ -1001,18 +1024,19 @@ void UserMenu() {
 int main() {
    srand(static_cast<unsigned int>(time(0)));
     LoadData();
-    cout<<"Welcome to CounterAttack , The number 1 app for all Football team  news regarding your favorite teams and world-wide football"<<endl;
+    cout<<"Welcome to CounterAttack ! "<<endl;;
+    cout<<" The number 1 app for all Football team news regarding your favorite teams and world-wide football"<<endl;
     gameoftheweek();
     while (true) {
-        int option=MainMenuOption();
-        if (option==1) {
+        string option=MainMenuOption();
+        if (option=="1") {
             Register();                    //handle registering
 
 
 
         }
 
-        else if (option==2) {
+        else if (option=="2") {
             Login();            //handles Sign in
             if (currentUserRole == "admin") {
                 AdminMenu();
