@@ -898,7 +898,7 @@ void FilterMatchesByTeam() {
                         cout<<"Date : "<<matches[j].date<<endl;
                         cout<<matches[j].team1 <<" "<<"Vs"<<" "<<matches[j].team2;
                         cout<<"Status : "<<matches[j].status<<endl;
-                        if (matches[j].status=="past" || matches[j].status=="Past") {
+                        if (matches[j].status=="past" ) {
                             cout<<matches[j].score1<<" --"<<matches[j].score2<<endl;
                         } else cout<<"Match is yet to be played"<<endl;
                     }
