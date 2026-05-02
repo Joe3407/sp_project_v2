@@ -884,19 +884,21 @@ void FilterMatchesByTeam() {
     cin.ignore(numeric_limits<streamsize>::max(), '\n');
     do{
         getline(cin,ChosenTeam);
+        AddUnderScore(ChosenTeam);
         if (ChosenTeam=="0") {
             break;
         }
-            for (int i = 0; i <20; i++) {
+            for (int i = 0; i <teamsCount; i++) {
             if (ChosenTeam==teams[i].name) {
                 TeamExists = true;
+                RemoveUnderScore(ChosenTeam);
                 cout<<"Here are the matches of "<<" "<<ChosenTeam<<" "<< ":"<<endl;
                 for (int j = 0;j<matchesCount;j++) {
                     if (ChosenTeam==matches[j].team1 || ChosenTeam==matches[j].team2) {
                         cout<<"Date : "<<matches[j].date<<endl;
                         cout<<matches[j].team1 <<" "<<"Vs"<<" "<<matches[j].team2;
                         cout<<"Status : "<<matches[j].status<<endl;
-                        if (matches[j].status=="Finished" || matches[j].status=="finished") {
+                        if (matches[j].status=="past" || matches[j].status=="Past") {
                             cout<<matches[j].score1<<" --"<<matches[j].score2<<endl;
                         } else cout<<"Match is yet to be played"<<endl;
                     }
