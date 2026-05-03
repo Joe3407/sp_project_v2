@@ -322,6 +322,8 @@ void AddTeam()
 
         string newTeamName;
         bool isUnique;
+        int pointsNum;
+        int titlesNum;
 
         //Checking if team already exists
         do
@@ -329,6 +331,10 @@ void AddTeam()
             cout << "Enter new team name: " << endl;
             getline(cin, newTeamName);
             isUnique = true;
+            cout << "Enter the number of points your team has in the league: " << endl;
+            cin >> pointsNum;
+            cout<< "Enter the number of titles your team has: " << endl;
+            cin >> titlesNum;
 
             for (int i = 0; i < teamsCount; i++)
             {
@@ -340,12 +346,16 @@ void AddTeam()
             }
         } while (isUnique == false);
 
+        cin.ignore(1000, '\n');
+        AddUnderScore(newTeamName);
         teams[teamsCount].name = newTeamName;
-        teams[teamsCount].totalPoints = 0;
-        teams[teamsCount].titles = 0;
+        teams[teamsCount].totalPoints = pointsNum;
+        teams[teamsCount].titles = titlesNum;
         cout << "Enter the new team's coach's name: " << endl;
         getline(cin, teams[teamsCount].coach);
+        AddUnderScore(teams[teamsCount].coach);
         teamsCount++;
+        RemoveUnderScore(newTeamName);
         cout << "Team " << newTeamName << " added" << endl;
 
         cout << "Do you want to add another team? (y/n)" << endl;
@@ -402,8 +412,10 @@ void AddUpcomingMatch()
 
             cout << "Enter team 1 name:" << endl;
             getline(cin, teamOne);
+            AddUnderScore(teamOne);
             cout << "Enter team 2 name:" << endl;
             getline(cin, teamTwo);
+            AddUnderScore(teamTwo);
 
             for (int i = 0; i < teamsCount; i++)
             {
