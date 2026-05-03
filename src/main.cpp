@@ -889,14 +889,14 @@ void gameoftheweek() {//extra function
 void FollowTeam() {
     int TeamChoice;
     bool ChoiceValid=false;
-    string ChangedName;
+    string Teams;
     string TeamName;
     do {
         cout<<"Which team would you like to follow ? (Or Enter 0 to return to main menu again): "<<endl;
         for (int i = 0; i < teamsCount; i++) {
-            ChangedName = teams[i].name;
-            RemoveUnderScore(ChangedName);
-            cout<<i+1<<"."<<ChangedName<<endl;
+            Teams = teams[i].name;
+            RemoveUnderScore(Teams);
+            cout<<i+1<<"."<<Teams<<endl;
         }
         cin>>TeamChoice;
         if (cin.fail()) {
