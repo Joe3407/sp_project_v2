@@ -322,6 +322,8 @@ void AddTeam()
 
         string newTeamName;
         bool isUnique;
+        int pointsNum;
+        int titlesNum;
 
         //Checking if team already exists
         do
@@ -329,6 +331,10 @@ void AddTeam()
             cout << "Enter new team name: " << endl;
             getline(cin, newTeamName);
             isUnique = true;
+            cout << "Enter the number of points your team has in the league: " << endl;
+            cin >> pointsNum;
+            cout<< "Enter the number of titles your team has: " << endl;
+            cin >> titlesNum;
 
             for (int i = 0; i < teamsCount; i++)
             {
@@ -340,12 +346,16 @@ void AddTeam()
             }
         } while (isUnique == false);
 
+        cin.ignore(1000, '\n');
+        AddUnderScore(newTeamName);
         teams[teamsCount].name = newTeamName;
-        teams[teamsCount].totalPoints = 0;
-        teams[teamsCount].titles = 0;
+        teams[teamsCount].totalPoints = pointsNum;
+        teams[teamsCount].titles = titlesNum;
         cout << "Enter the new team's coach's name: " << endl;
         getline(cin, teams[teamsCount].coach);
+        AddUnderScore(teams[teamsCount].coach);
         teamsCount++;
+        RemoveUnderScore(newTeamName);
         cout << "Team " << newTeamName << " added" << endl;
 
         cout << "Do you want to add another team? (y/n)" << endl;
@@ -354,7 +364,6 @@ void AddTeam()
             return;
     }
 }
-
 
 void AddUpcomingMatch()
 {
@@ -789,44 +798,67 @@ void displayfollowedmatch() {
     string followtemp[10];
     int j=0;
     bool flag = false;
-    cout << "\t  Matches for followed teams\n";
+    int choice;
     for (int i = 0; i < followCount; i++) {//loop to store fav teams
-        if (currentLoggedInUser==follow[i].username) {
+        if (follow[i].teamName=="") {
+            break;
+        }
+       else if (currentLoggedInUser==follow[i].username) {
             followtemp[j]=follow[i].teamName;
             j++;
             flag = true;
         }
     }
-    if (flag){
-        for (int i = 0; i < matchesCount; i++) {
-            for (int z=0; z<10; z++) {//loop through matches and display followed  matches only
-                if (matches[i].team1==followtemp[z]||matches[i].team2==followtemp[z]) {
-                    cout<<"\t"<<matches[i].team1<<" "<<matches[i].score1<<"\t"<<"v.s\t"<<matches[i].score2<<matches[i].team2<<endl;
-                    cout<<"\t\t"<<"Date is : "<<matches[i].date<<endl;
-                    cout<<"\t\t"<<"time is : "<<matches[i].time<<endl;
+    if (flag) {
+        do{
+            cout << "\n======================================\n" ;
+            cout << "1. Show Followed Team Matches\n";
+            cout << "2. Show Followed Team Data (Feed)\n";
+            cout << "3. Go to Main Menu\n";
+            cout << "Enter choice: ";
+            cin >> choice;
+            cout << "======================================\n";
+            switch(choice) {
+                case 1:{ cout << "\t  Matches for followed teams\n";
+                    for (int i = 0; i < matchesCount; i++) {
+                    if (matches[i].team1=="")break;
+                    for (int z=0; z<j; z++) {//loop through matches and display followed  matches only
+                        if (matches[i].team1==followtemp[z]||matches[i].team2==followtemp[z]) {
+                            cout<<"\t"<<matches[i].team1<<" "<<matches[i].score1<<"\t"<<"v.s\t"<<matches[i].score2<<" "<<matches[i].team2<<endl;
+                            cout<<"\t\t"<<"Date is : "<<matches[i].date<<endl;
+                            cout<<"\t\t"<<"time is : "<<matches[i].time<<endl;
+                        }
+                    }
+                }break;}
+                case 2:{cout<<"**********************    Feed for fav Teams  ****************\n";
+                    for (int i = 0; i < j; i++) {
+                        for (int z=0; z<20; z++) {//loop through all teams to get followed
+                            if (followtemp[i]==teams[z].name) {//display data
+                                if(followtemp[i]=="")continue;
+                                else{
+                                    cout<<"team name is  "<<teams[z].name<<endl;
+                                    cout<<"coach name is "<<teams[z].coach<<endl;
+                                    cout<<"Total points : "<<teams[z].totalPoints<<endl;
+                                    if (teams[z].titles==0) cout<<"You have no titles better luck with coach "<<teams[z].coach<<endl;
+                                    else cout<<"Total titles : "<<teams[z].titles<<endl;
+                                    break;}
+                            }
+                        }
+                    }break;}
+                case 3:{cout << "Returning to main menu...\n";
+                    break;};
+                    default: {
+                        cout<<"Invalid choice!\n";
+                        break;
+                    }
+            }
 
-                    break;
-                }
-            }
-        }
-        cout<<"**********************    Feed for fav Teams  ****************\n";
-        for (int i = 0; i < 10; i++) {
-            for (int z=0; z<20; z++) {//loop through all teams to get followed
-                 if (followtemp[i]==teams[z].name) {//display data
-                    if(followtemp[i]=="")continue;
-                    else{
-                     cout<<"team name is  "<<teams[z].name<<endl;
-                     cout<<"coach name is "<<teams[z].coach<<endl;
-                     cout<<"Total points : "<<teams[z].totalPoints<<endl;
-                     if (teams[z].titles==0) cout<<"You have no titles better luck with coach "<<teams[z].coach<<endl;
-                     else cout<<"Total titles : "<<teams[z].titles<<endl;
-                     break;}
-                 }
-            }
-        }
+
+        }while (choice != 3);
     }
     else cout<<"please follow a team";
 }
+
 
 void gameoftheweek() {//extra function
     if (matchesCount == 0) {
