@@ -537,3 +537,9 @@ FodyWeavers.xsd
 *.vcxproj
 *.vcxproj.*
 project2_sp/
+.idea/
+.vs/
+.vscode/
+build/
+CMakeSettings.json
+*.exe
