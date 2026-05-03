@@ -413,8 +413,11 @@ void AddUpcomingMatch()
 
             cout << "Enter team 1 name:" << endl;
             getline(cin, teamOne);
+            AddUnderScore(teamOne);
             cout << "Enter team 2 name:" << endl;
             getline(cin, teamTwo);
+            AddUnderScore(teamTwo);
+
 
             for (int i = 0; i < teamsCount; i++)
             {
