@@ -207,11 +207,11 @@ void Display_upcoming_matches()
 
 //check if user follow this team or not
 
-int check_team_infollow(string teamname)
+int check_team_infollow(string TeamChoice)
 {
     for (int i = 0; i < followCount; i++)
     {
-        if (teamname == follow[i].teamName && currentLoggedInUser == follow[i].username)
+        if (TeamChoice == follow[i].teamName && currentLoggedInUser == follow[i].username)
         {
             return i;
         }
@@ -321,6 +321,7 @@ void AddTeam()
         cin.ignore(1000, '\n');
 
         string newTeamName;
+        string ChangedName;
         bool isUnique;
         int pointsNum;
         int titlesNum;
@@ -355,8 +356,9 @@ void AddTeam()
         getline(cin, teams[teamsCount].coach);
         AddUnderScore(teams[teamsCount].coach);
         teamsCount++;
-        RemoveUnderScore(newTeamName);
-        cout << "Team " << newTeamName << " added" << endl;
+        ChangedName=newTeamName;
+        RemoveUnderScore(ChangedName);
+        cout << "Team " << ChangedName << " added" << endl;
 
         cout << "Do you want to add another team? (y/n)" << endl;
         cin >> choice;
@@ -566,7 +568,7 @@ bool matchfound = false ;
 
 ///////////////////////////////////league leaderboard function defenition (extra function)
 void leagueleaderboard(){
-
+string ChangedName;
 
 
 
@@ -596,7 +598,8 @@ for (int i = 0 ; i < teamsCount-1  ; i++){
 
 
     for(int i = 0; i < teamsCount; i++){
-        RemoveUnderScore(teams[i].name);
+        ChangedName = teams[i].name;
+        RemoveUnderScore(ChangedName);
         cout<<left<<setw(10)<<(i + 1)
             <<setw(20)<<teams[i].name
             <<setw(15)<<teams[i].totalPoints
@@ -831,15 +834,21 @@ void displayfollowedmatch() {
                     }
                 }break;}
                 case 2:{cout<<"**********************    Feed for fav Teams  ****************\n";
+                    string ChangedCoachName;
+                    string ChangedTeamName;
                     for (int i = 0; i < j; i++) {
                         for (int z=0; z<20; z++) {//loop through all teams to get followed
                             if (followtemp[i]==teams[z].name) {//display data
                                 if(followtemp[i]=="")continue;
                                 else{
-                                    cout<<"team name is  "<<teams[z].name<<endl;
-                                    cout<<"coach name is "<<teams[z].coach<<endl;
+                                    ChangedCoachName=teams[z].coach;
+                                    ChangedTeamName=teams[z].name;
+                                    RemoveUnderScore(ChangedCoachName);
+                                    RemoveUnderScore(ChangedTeamName);
+                                    cout<<"team name is  "<<ChangedTeamName<<endl;
+                                    cout<<"coach name is "<<ChangedCoachName<<endl;
                                     cout<<"Total points : "<<teams[z].totalPoints<<endl;
-                                    if (teams[z].titles==0) cout<<"You have no titles better luck with coach "<<teams[z].coach<<endl;
+                                    if (teams[z].titles==0) cout<<"You have no titles better luck with coach "<<ChangedCoachName<<endl;
                                     else cout<<"Total titles : "<<teams[z].titles<<endl;
                                     break;}
                             }
@@ -878,74 +887,107 @@ void gameoftheweek() {//extra function
 //--------------------------------------------------------------
 //Muhammad
 void FollowTeam() {
-    cout<<"Please enter the name of the team you want to follow (Or Enter 0 to return to main menu again): "<<endl;
-    cout<<"Note : You can follow a maximum number of 10 teams "<<endl;
+    int TeamChoice;
+    bool ChoiceValid=false;
+    string ChangedName;
     string TeamName;
-    bool TeamExists=false;
-    cin.ignore(numeric_limits<streamsize>::max(), '\n');
-    do{
-        getline(cin,TeamName);
-       AddUnderScore(TeamName);
-        if (TeamName =="0") {
+    do {
+        cout<<"Which team would you like to follow ? (Or Enter 0 to return to main menu again): "<<endl;
+        for (int i = 0; i < teamsCount; i++) {
+            ChangedName = teams[i].name;
+            RemoveUnderScore(ChangedName);
+            cout<<i+1<<"."<<ChangedName<<endl;
+        }
+        cin>>TeamChoice;
+        if (cin.fail()) {
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cout << "Invalid input. Please enter a number." << endl;
+            continue;
+        }
+
+        if (cin.peek() != '\n') {
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cout << "Invalid input. Please enter a number." << endl;
+            continue;
+        }
+        cin.ignore();
+
+        if (TeamChoice ==0) {
             break;
         }
-        for (int i = 0; i <teamsCount; i++) {
-            if (TeamName==teams[i].name) {
-                TeamExists=true;
-                if (check_team_infollow(TeamName)!=-1) {
-                    cout<<"You are already following this team "<<endl;
-                    break;
-                }
-                if (followCount<200) {
+            if (TeamChoice>0&&TeamChoice<=teamsCount) {
+                ChoiceValid=true;
+                // if (check_team_infollow(TeamChoice)!=-1) {
+                //     cout<<"You are already following this team "<<endl;
+                //     break;
+                // }
+                if (followCount<2000) {
                     follow[followCount].username=currentLoggedInUser;
-                    follow[followCount].teamName=TeamName;
+                    follow[followCount].teamName=teams[TeamChoice-1].name;
                     followCount++;
+                    TeamName=teams[TeamChoice-1].name;
                     RemoveUnderScore(TeamName);
                     cout<<"You are now following "<<" "<<TeamName<<endl;
                 }
             }
-        }
-        if (TeamExists==false) {
-            cout<<"Team doesn't exist ,Please make sure you entered the correct name and try again (Or Enter 0 to return to main menu again) "<<endl;
+
+
+        if (ChoiceValid==false) {
+            cout<<"Incorrect Number Entered Please Try again "<<endl;
         }
 
 
-    }while (TeamExists==false);
+    }while (ChoiceValid==false);
 }
 
 void FilterMatchesByTeam() {
-    cout<<"Which team do you want to view their matches ? (Or Enter 0 to return to main menu again):"<<" ";
-    string ChosenTeam;
-    bool TeamExists = false;
-    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+    int TeamChoice;
+    bool ChoiceValid = false;
+    string Teams;;
     do{
-        getline(cin,ChosenTeam);
-        AddUnderScore(ChosenTeam);
-        if (ChosenTeam=="0") {
+        cout<<"Which team do you want to view their matches ? (Or Enter 0 to return to main menu again):"<<" "<<endl;
+        for (int i=0;i<teamsCount;i++) {
+            Teams=teams[i].name;
+            RemoveUnderScore(Teams);
+            cout<<i+1<<"."<<Teams<<endl;
+        }
+        cin >> TeamChoice;
+        if (cin.fail()) {   //dey bthandle el 7agat ely feeha char or string
+            cin.clear(); //cinfail feeha switches lma el input is wrong they are set as ON w el function wont work , cinclear bt2ool el cin en el denya tmam u can take input agian
+            cin.ignore(numeric_limits<streamsize>::max(), '\n'); // btsheel all inputs le7ad el backslash n
+            cout << "Invalid input. Please enter a number." << endl;
+            continue;
+        }
+        if (cin.peek() != '\n') {  //cinpeek betbos 3ala next cahracter fel input 3ala tool lw fee 7aga 8eer \n el if block bnd5ol feeh     \\handles inputs zey 1a el 1 saved fel cin w el a byt3melha delete hena
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cout << "Invalid input. Please enter a number only." << endl;
+            continue;
+        }
+        cin.ignore();// law el input sa7 lazem nsheel el /n men el a5er 3lshan next cin ma tedrabesh
+        if (TeamChoice==0) {
             break;
         }
-            for (int i = 0; i <teamsCount; i++) {
-            if (ChosenTeam==teams[i].name) {
-                TeamExists = true;
-                RemoveUnderScore(ChosenTeam);
-                cout<<"Here are the matches of "<<" "<<ChosenTeam<<" "<< ":"<<endl;
-                for (int j = 0;j<matchesCount;j++) {
-                    if (ChosenTeam==matches[j].team1 || ChosenTeam==matches[j].team2) {
+        if (TeamChoice>0&&TeamChoice<=teamsCount) {
+            ChoiceValid=true;
+            string TeamName=teams[TeamChoice-1].name;
+            RemoveUnderScore(TeamName);
+            cout<<"Here are the matches of "<<" "<<TeamName<<" "<< ":"<<endl;
+            for (int j = 0;j<matchesCount;j++) {
+                    if (TeamName==matches[j].team1 || TeamName==matches[j].team2) {
                         cout<<"Date : "<<matches[j].date<<endl;
-                        cout<<matches[j].team1 <<" "<<"Vs"<<" "<<matches[j].team2;
+                        cout<<matches[j].team1 <<" "<<"Vs"<<" "<<matches[j].team2 <<endl;
                         cout<<"Status : "<<matches[j].status<<endl;
                         if (matches[j].status=="past" ) {
-                            cout<<matches[j].score1<<" --"<<matches[j].score2<<endl;
+                            cout<<"Score : " <<matches[j].score1<<"--"<<matches[j].score2<<endl;
                         } else cout<<"Match is yet to be played"<<endl;
                     }
-                }break;
+                }
             }
-
-        }  if (TeamExists==false) cout<<"Invalid team name , please check the team name and try again (Or Enter 0 to return to main menu again):"<< " ";
-
-
-
-    }while (TeamExists == false);
+        if (ChoiceValid==false) {
+            cout<<"Incorrect Number Entered Please Try again "<<endl;
+        }
+    }while (ChoiceValid == false);
 }
 
 string MainMenuOption() {
