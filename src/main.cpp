@@ -417,6 +417,7 @@ void AddUpcomingMatch()
             getline(cin, teamTwo);
             AddUnderScore(teamTwo);
 
+
             for (int i = 0; i < teamsCount; i++)
             {
                 if (teams[i].name == teamOne)
