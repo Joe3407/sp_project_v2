@@ -970,14 +970,15 @@ void FilterMatchesByTeam() {
         }
         if (TeamChoice>0&&TeamChoice<=teamsCount) {
             ChoiceValid=true;
-            string TeamName=teams[TeamChoice-1].name;
-            RemoveUnderScore(TeamName);
-            cout<<"Here are the matches of "<<" "<<TeamName<<" "<< ":"<<endl;
+            string DisplayName=teams[TeamChoice-1].name;
+            RemoveUnderScore(DisplayName);
+            cout<<"Here are the matches of "<<" "<<DisplayName<<" "<< ":"<<endl;
             for (int j = 0;j<matchesCount;j++) {
-                    if (TeamName==matches[j].team1 || TeamName==matches[j].team2) {
+                    if (teams[TeamChoice-1].name==matches[j].team1 || teams[TeamChoice-1].name==matches[j].team2) {
                         cout<<"Date : "<<matches[j].date<<endl;
                         cout<<matches[j].team1 <<" "<<"Vs"<<" "<<matches[j].team2 <<endl;
                         cout<<"Status : "<<matches[j].status<<endl;
+
                         if (matches[j].status=="past" ) {
                             cout<<"Score : " <<matches[j].score1<<"--"<<matches[j].score2<<endl;
                         } else cout<<"Match is yet to be played"<<endl;
