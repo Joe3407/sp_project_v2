@@ -844,6 +844,7 @@ void gameoftheweek() {//extra function
 //Muhammad
 void FollowTeam() {
     cout<<"Please enter the name of the team you want to follow (Or Enter 0 to return to main menu again): "<<endl;
+    cout<<"Note : You can follow a maximum number of 10 teams "<<endl;
     string TeamName;
     bool TeamExists=false;
     cin.ignore(numeric_limits<streamsize>::max(), '\n');
