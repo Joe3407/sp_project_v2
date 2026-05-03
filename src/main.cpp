@@ -470,19 +470,22 @@ void UpdateMatchResult(){
 
 
 
-///////////////////// input the two teams
+//////////////////////////////////////////// input the two teams
 string input_team1 ;
 string input_team2 ;
 
 cout<<"enter team 1"<<endl;
-cin.ignore(numeric_limits<streamsize>::max(),'\n');
+cin.ignore(numeric_limits<streamsize>::max(),'\n'); 
 getline(cin, input_team1);
+AddUnderScore(input_team1); //add underscore between the name
 
 cout<<"enter team 2"<<endl;
 getline(cin, input_team2);
+AddUnderScore(input_team2);
 
 
-//////////////////// search for the match
+
+///////////////////////// search for the match
 bool matchfound = false ;
 
     for ( int i = 0 ; i < matchesCount ; i++ ){
@@ -503,7 +506,6 @@ bool matchfound = false ;
           matches[i].status = "past";
 
             if (matches[i].score1 > matches[i].score2){  /////////// Team 1 wins
-
 
               for (int j = 0; j < teamsCount; j++) {
 
@@ -573,24 +575,25 @@ for (int i = 0 ; i < teamsCount-1  ; i++){
 
 
 
-cout << "========================================================"<<endl;
-    cout << "                  🏆 LEAGUE LEADERBOARD 🏆                  "<<endl;
-    cout << "========================================================"<<endl;
+    cout<<"========================================================"<<endl;
+    cout<<"               🏆 LEAGUE LEADERBOARD 🏆             "<<endl;
+    cout<<"========================================================"<<endl;
 
-    cout << left << setw(10) << "Rank"
-         << setw(20) << "Team Name"
-         << setw(15) << "Points"
-         << setw(10) << "Titles" << endl;
-    cout << "--------------------------------------------------------"<<endl;
+    cout<<left<<setw(10)<<"Rank"
+        <<setw(20)<<"Team Name"
+        <<setw(15)<<"Points"
+        <<setw(10)<<"Titles"<<endl;
+    cout<<"--------------------------------------------------------"<<endl;
 
 
-    for (int i = 0; i < teamsCount; i++) {
-        cout << left << setw(10) << (i + 1)
-             << setw(20) << teams[i].name
-             << setw(15) << teams[i].totalPoints
-             << setw(10) << teams[i].titles << endl;
+    for(int i = 0; i < teamsCount; i++){
+        RemoveUnderScore(teams[i].name);
+        cout<<left<<setw(10)<<(i + 1)
+            <<setw(20)<<teams[i].name
+            <<setw(15)<<teams[i].totalPoints
+            <<setw(10)<<teams[i].titles<<endl;
     }
-    cout << "========================================================"<<endl;
+    cout<<"========================================================"<<endl;
 
 
 
