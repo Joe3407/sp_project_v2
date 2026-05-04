@@ -902,6 +902,9 @@ void Logout() {
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 // Moaz
 void displayfollowedmatch() {
+    string ChangedTeam1Name;
+    string ChangedTeam2Name;
+
     string followtemp[20];
     int j = 0;//counter to know each user number of follows
     bool flag = false;
@@ -1040,6 +1043,8 @@ void RemoveTeam() {
 }
 
 void gameoftheweek() {//extra function
+    string ChangedName_1;
+    string ChangedName_2;
     if (matchesCount == 0) {
         cout << "\n[Notice] No matches scheduled yet for the Game of the Week.\n";
         return;
