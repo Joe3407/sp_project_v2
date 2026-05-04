@@ -152,13 +152,15 @@ void Display_All_Matches()
         RemoveUnderScore(team2);
         if (matches[i].status == "upcoming" || matches[i].status == "past")
         {
-            cout << "------------------------------------------------------\n";
-            cout << "status:                        " << matches[i].status << endl;
-            cout << "teams name:       " << matches[i].team1 << "                 " << matches[i].team2 << endl;
-            cout << "score:                " << matches[i].score1 << "                      " << matches[i].score2 << endl;
-            cout << "time:                         " << matches[i].time << endl;
-            cout << "date:                        " << matches[i].date << endl;
-            cout << "------------------------------------------------------\n\n";
+            cout << " ------------------------------------------------------\n";
+            cout << "|  " << left << setw(10) << "status: " << matches[i].status << right << setw(25) << matches[i].date << " | " << matches[i].time << "     |\n";
+            cout << " ------------------------------------------------------\n";
+            cout << "|                                                      |\n";
+            cout << "|" << right << setw(22) << matches[i].team1 << "    vs    " << left << setw(22) << matches[i].team2 << "|\n";
+            cout << "|                                                      |\n";
+            cout << "|" << right << setw(22) << matches[i].score1 << "    --    " << left << setw(22) << matches[i].score2 << "|\n";
+            cout << "|                                                      |\n";
+            cout << " ------------------------------------------------------\n";
 
         }
     }
@@ -177,13 +179,15 @@ void Display_past_matches()
         RemoveUnderScore(team2);
         if (matches[i].status == "past")
         {
-            cout << "------------------------------------------------------\n";
-            cout << "status:                        " << matches[i].status << endl;
-            cout << "teams name:       " << matches[i].team1 << "                 " << matches[i].team2 << endl;
-            cout << "score:                " << matches[i].score1 << "                      " << matches[i].score2 << endl;
-            cout << "time:                         " << matches[i].time << endl;
-            cout << "date:                        " << matches[i].date << endl;
-            cout << "------------------------------------------------------\n\n";
+            cout << " ------------------------------------------------------\n";
+            cout << "|  " << left << setw(10) << "status: " << matches[i].status << right << setw(25) << matches[i].date << " | " << matches[i].time << "     |\n";
+            cout << " ------------------------------------------------------\n";
+            cout << "|                                                      |\n";
+            cout << "|" << right << setw(22) << matches[i].team1 << "    vs    " << left << setw(22) << matches[i].team2 << "|\n";
+            cout << "|                                                      |\n";
+            cout << "|" << right << setw(22) << matches[i].score1 << "    --    " << left << setw(22) << matches[i].score2 << "|\n";
+            cout << "|                                                      |\n";
+            cout << " ------------------------------------------------------\n";
         }
     }
 }
@@ -205,13 +209,15 @@ void Display_upcoming_matches()
         RemoveUnderScore(team2);
         if (matches[i].status == "upcoming")
         {
-            cout << "------------------------------------------------------\n";
-            cout << "status:                        " << matches[i].status << endl;
-            cout << "teams name:       " << matches[i].team1 << "                 " << matches[i].team2 << endl;
-            cout << "score:                " << matches[i].score1 << "                      " << matches[i].score2 << endl;
-            cout << "time:                         " << matches[i].time << endl;
-            cout << "date:                        " << matches[i].date << endl;
-            cout << "------------------------------------------------------\n\n";
+            cout << " ------------------------------------------------------\n";
+            cout << "|  " << left << setw(10) << "status: " << matches[i].status << right << setw(25) << matches[i].date << " | " << matches[i].time << "     |\n";
+            cout << " ------------------------------------------------------\n";
+            cout << "|                                                      |\n";
+            cout << "|" << right << setw(22) << matches[i].team1 << "    vs    " << left << setw(22) << matches[i].team2 << "|\n";
+            cout << "|                                                      |\n";
+            cout << "|" << right << setw(22) << matches[i].score1 << "    --    " << left << setw(22) << matches[i].score2 << "|\n";
+            cout << "|                                                      |\n";
+            cout << " ------------------------------------------------------\n";
         }
     }
 }
@@ -262,10 +268,12 @@ void unfollow_team()
             }
         }
         cout << "Which team would you like to unfollow ? (Or Enter 0 to return to main menu again): \n";
+        cout << "please enter\" the number\" of team in the menu\n";
+        cout << "----------- The teams you follow -----------\n";
         for (int i = 0; i < userFollowCount; i++) {
             teamNAME = follow[userFollowIndices[i]].teamName;
             RemoveUnderScore(teamNAME);
-            cout << i + 1 << "." << teamNAME << endl;
+            cout << i + 1 << ". " << teamNAME << endl;
         }
         cin >> number_of_team;
         if (cin.fail()) {
