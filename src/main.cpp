@@ -1007,10 +1007,10 @@ void FollowTeam() {
         }
             if (TeamChoice>0&&TeamChoice<=teamsCount) {
                 ChoiceValid=true;
-                // if (check_team_infollow(TeamChoice)!=-1) {
-                //     cout<<"You are already following this team "<<endl;
-                //     break;
-                // }
+                if (check_team_infollow(TeamChoice)!=-1) {
+                    cout<<"You are already following this team "<<endl;
+                    break;
+                }
                 if (followCount<2000) {
                     follow[followCount].username=currentLoggedInUser;
                     follow[followCount].teamName=teams[TeamChoice-1].name;
