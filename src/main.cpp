@@ -229,7 +229,6 @@ int check_team_infollow(int TeamChoice)
     return -1;
 }
 
-
 // function to unfollow
 
 void unfollow_team()
