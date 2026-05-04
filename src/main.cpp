@@ -183,7 +183,7 @@ void Display_past_matches()
             cout << "|  " << left << setw(10) << "status: " << matches[i].status << right << setw(25) << matches[i].date << " | " << matches[i].time << "     |\n";
             cout << " ------------------------------------------------------\n";
             cout << "|                                                      |\n";
-            cout << "|" << right << setw(22) << matches[i].team1 << "    vs    " << left << setw(22) << matches[i].team2 << "|\n";
+            cout << "|" << right << setw(22) << team1 << "    vs    " << left << setw(22) << team2 << "|\n";
             cout << "|                                                      |\n";
             cout << "|" << right << setw(22) << matches[i].score1 << "    --    " << left << setw(22) << matches[i].score2 << "|\n";
             cout << "|                                                      |\n";
@@ -195,9 +195,6 @@ void Display_past_matches()
 // Display_upcoming_matches
 void Display_upcoming_matches()
 {
-    string ChangedName_1;
-    string ChangedName_2;
-    
     cout << "******************************************************\n";
     cout << "                     upcoming Matches                 \n";
     cout << "******************************************************\n\n";
@@ -213,7 +210,7 @@ void Display_upcoming_matches()
             cout << "|  " << left << setw(10) << "status: " << matches[i].status << right << setw(25) << matches[i].date << " | " << matches[i].time << "     |\n";
             cout << " ------------------------------------------------------\n";
             cout << "|                                                      |\n";
-            cout << "|" << right << setw(22) << matches[i].team1 << "    vs    " << left << setw(22) << matches[i].team2 << "|\n";
+            cout << "|" << right << setw(22) << team1 << "    vs    " << left << setw(22) << team2 << "|\n";
             cout << "|                                                      |\n";
             cout << "|" << right << setw(22) << matches[i].score1 << "    --    " << left << setw(22) << matches[i].score2 << "|\n";
             cout << "|                                                      |\n";
