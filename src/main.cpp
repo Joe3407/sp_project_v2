@@ -920,7 +920,7 @@ void displayfollowedmatch() {
                                 cout << "\t\t Date: " << matches[i].date << " | Time: " << matches[i].time << endl;
                                 break; // Prevent double printing if both teams are followed
                             }
-                                
+
                         }
                     }
                     break;
