@@ -195,6 +195,9 @@ void Display_past_matches()
 // Display_upcoming_matches
 void Display_upcoming_matches()
 {
+    string ChangedName_1;
+    string ChangedName_2;
+    
     cout << "******************************************************\n";
     cout << "                     upcoming Matches                 \n";
     cout << "******************************************************\n\n";
@@ -628,7 +631,7 @@ for (int i = 0 ; i < teamsCount-1  ; i++){
 
 
     cout<<"========================================================"<<endl;
-    cout<<"               🏆 LEAGUE LEADERBOARD 🏆             "<<endl;
+    cout<<"                LEAGUE LEADERBOARD              "<<endl;
     cout<<"========================================================"<<endl;
 
     cout<<left<<setw(10)<<"Rank"
@@ -996,6 +999,8 @@ void RemoveTeam() {
 }
 
 void gameoftheweek() {//extra function
+    string ChangedName_1;
+    string ChangedName_2;
     if (matchesCount == 0) {
         cout << "\n[Notice] No matches scheduled yet for the Game of the Week.\n";
         return;
@@ -1004,9 +1009,14 @@ void gameoftheweek() {//extra function
     cout << "\n******************************************" << endl;
     cout << "         GAME OF THE WEEK             " << endl;
     cout << "******************************************" << endl;
-    if (matches[matchhnum].status=="past")
-        cout<<matches[matchhnum].team1<<" "<<matches[matchhnum].score1<<"\t"<<"v.s\t"<<matches[matchhnum].score2<<" "<<matches[matchhnum].team2<<endl;
-    else cout<<matches[matchhnum].team1<<"\t"<<"v.s\t"<<matches[matchhnum].team2<<endl;
+    ChangedName_1=matches[matchhnum].team1;
+    ChangedName_2=matches[matchhnum].team2;
+    RemoveUnderScore(ChangedName_1);
+    RemoveUnderScore(ChangedName_2);
+    if (matches[matchhnum].status=="past") {
+        cout<<ChangedName_1<<" "<<matches[matchhnum].score1<<"\t"<<"v.s\t"<<matches[matchhnum].score2<<" "<<ChangedName_2<<endl;
+    }
+    else cout<<ChangedName_1<<"\t"<<"v.s\t"<<ChangedName_2<<endl;
     cout<<"\t"<<"Date is : "<<matches[matchhnum].date<<endl;
     cout << "******************************************" << endl;
 }
