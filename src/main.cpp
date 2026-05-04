@@ -147,6 +147,9 @@ void Display_All_Matches()
 
     for (int i = 0; i < matchesCount; i++)
     {
+        string team1 = matches[i].team1, team2 = matches[i].team2;
+        RemoveUnderScore(team1);
+        RemoveUnderScore(team2);
         if (matches[i].status == "upcoming" || matches[i].status == "past")
         {
             cout << "------------------------------------------------------\n";
@@ -169,6 +172,9 @@ void Display_past_matches()
 
     for (int i = 0; i < matchesCount; i++)
     {
+        string team1 = matches[i].team1, team2 = matches[i].team2;
+        RemoveUnderScore(team1);
+        RemoveUnderScore(team2);
         if (matches[i].status == "past")
         {
             cout << "------------------------------------------------------\n";
@@ -191,6 +197,9 @@ void Display_upcoming_matches()
 
     for (int i = 0; i < matchesCount; i++)
     {
+        string team1 = matches[i].team1, team2 = matches[i].team2;
+        RemoveUnderScore(team1);
+        RemoveUnderScore(team2);
         if (matches[i].status == "upcoming")
         {
             cout << "------------------------------------------------------\n";
@@ -207,11 +216,12 @@ void Display_upcoming_matches()
 
 //check if user follow this team or not
 
-int check_team_infollow(string TeamChoice)
+int check_team_infollow(int TeamChoice)
 {
+    TeamChoice--;
     for (int i = 0; i < followCount; i++)
     {
-        if (TeamChoice == follow[i].teamName && currentLoggedInUser == follow[i].username)
+        if (teams[TeamChoice].name == follow[i].teamName && currentLoggedInUser == follow[i].username)
         {
             return i;
         }
@@ -225,78 +235,97 @@ int check_team_infollow(string TeamChoice)
 void unfollow_team()
 {
 
-    cout << "please enter the team which you want to unfollow\n";
-    string team_name_for_unfollow;
+
     bool check2 = false;
+    string teamNAME;
+    while (check2 == false)
+    {
+       
 
-    do {
-        bool team_is_true = false;
-        cin.ignore(1,'\n');
-        getline(cin, team_name_for_unfollow);
-
-
-        for (int q = 0; q < teamsCount; q++)
+        if (followCount == 0)
         {
-            if (team_name_for_unfollow == teams[q].name)
+            cout << "you don't have any team in follow list to unfollow\n";
+            break;
+        }
+
+        int userFollowIndices[100];
+        int userFollowCount = 0;
+        int number_of_team;
+        for (int i = 0; i < followCount; i++)
+        {
+            if (currentLoggedInUser == follow[i].username)
             {
-                team_is_true = true;
-                break;
+                userFollowIndices[userFollowCount] = i;
+                userFollowCount++;
             }
         }
-        string options1;
+        cout << "Which team would you like to unfollow ? (Or Enter 0 to return to main menu again): \n";
+        for (int i = 0; i < userFollowCount; i++) {
+            teamNAME = follow[userFollowIndices[i]].teamName;
+            RemoveUnderScore(teamNAME);
+            cout << i + 1 << "." << teamNAME << endl;
+        }
+        cin >> number_of_team;
+        if (cin.fail()) {
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cout << "Invalid input. Please enter a number." << endl;
+            continue;
+        }
 
-        if (team_is_true == false)
+        if (cin.peek() != '\n') {
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cout << "Invalid input. Please enter a number." << endl;
+            continue;
+        }
+        if (number_of_team == 0)
         {
-            cout << "******************\n";
-            cout << " wrong name :( \n";
-            cout << "******************\n";
+            break;
+        }
+        if (!(number_of_team >= 1 && number_of_team <= userFollowCount ))
+        {
+            cout << "--------------\n";
+            cout << "Invalid number\n";
+            cout << "--------------\n";
 
-            cout << "if you want to rewrite the team name press \"r\"   (if not enter any thing)\n";
-            cin >> options1;
-            if (options1 == "r" || options1 == "R")
-            {
-                cout << "please enter the team which you want to unfollow\n";
                 continue;
-            }
-        else { break; }
         }
+        number_of_team--;
+        
+       int actual_index = userFollowIndices[number_of_team];
+        
+        teamNAME = follow[actual_index].teamName;
 
-
-
-
-        int number_team_in_follow_list = check_team_infollow(team_name_for_unfollow);
-
-        if (number_team_in_follow_list != -1 && team_is_true)
+        follow[actual_index].teamName = "";
+        follow[actual_index].username = "";
+         
+        for (int j = actual_index; j < followCount - 1; j++)
         {
-            follow[number_team_in_follow_list].teamName = "";
-            follow[number_team_in_follow_list].username = "";
-            for (int j = number_team_in_follow_list; j < followCount - 1; j++)
-            {
                 follow[j].teamName = follow[j + 1].teamName;
                 follow[j].username = follow[j + 1].username;
-            }
-
-            followCount--;
-            cout << "You are no longer following " << team_name_for_unfollow << "." << endl;
-            check2 = true;
         }
+            followCount--;
+            RemoveUnderScore(teamNAME);
+            cout << "---------------------------------------------------------------\n";
+            cout << "You are no longer following " << teamNAME << endl;
+            cout << "---------------------------------------------------------------\n";
 
-        else
-        {
-            cout << "this team does not exist in follow list\n";
-            cout << "if you want to rewrite another team press \"r\"      (press \"x\" to exit )\n";
+
+        
+            cout << "if you want to unfollow another team press \"r\"   or   (press \"x\" to exit )\n";
             string options2;
             cin >> options2;
             if (options2 == "r" || options2 == "R")
             {
                 check2 = false;
+
             }
             else
             {
                 check2 = true;
             }
-        }
-    } while (check2 == false);
+        
+    } 
 }
 
 
