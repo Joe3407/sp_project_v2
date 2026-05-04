@@ -138,39 +138,15 @@ void RemoveUnderScore(string& TeamName) {
 // --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 // Hassan Badr
 
-// Display_All_Matches
-void Display_All_Matches()
-{
-    cout << "******************************************************\n";
-    cout << "                     All Matches                      \n";
-    cout << "******************************************************\n\n";
 
-    for (int i = 0; i < matchesCount; i++)
-    {
-        string team1 = matches[i].team1, team2 = matches[i].team2;
-        RemoveUnderScore(team1);
-        RemoveUnderScore(team2);
-        if (matches[i].status == "upcoming" || matches[i].status == "past")
-        {
-            cout << " ------------------------------------------------------\n";
-            cout << "|  " << left << setw(10) << "status: " << matches[i].status << right << setw(25) << matches[i].date << " | " << matches[i].time << "     |\n";
-            cout << " ------------------------------------------------------\n";
-            cout << "|                                                      |\n";
-            cout << "|" << right << setw(22) << matches[i].team1 << "    vs    " << left << setw(22) << matches[i].team2 << "|\n";
-            cout << "|                                                      |\n";
-            cout << "|" << right << setw(22) << matches[i].score1 << "    --    " << left << setw(22) << matches[i].score2 << "|\n";
-            cout << "|                                                      |\n";
-            cout << " ------------------------------------------------------\n";
 
-        }
-    }
-}
+
 // Display_past_matches
 void Display_past_matches()
 {
-    cout << "******************************************************\n";
-    cout << "                     Past Matches                     \n";
-    cout << "******************************************************\n\n";
+    cout << "                    ================  \n";
+    cout << "                   |  Past Matches  | \n";
+    cout << "                    ================  \n";
 
     for (int i = 0; i < matchesCount; i++)
     {
@@ -180,7 +156,7 @@ void Display_past_matches()
         if (matches[i].status == "past")
         {
             cout << " ------------------------------------------------------\n";
-            cout << "|  " << left << setw(10) << "status: " << matches[i].status << right << setw(25) << matches[i].date << " | " << matches[i].time << "     |\n";
+            cout << "|  status: " << left << setw(10) << matches[i].status << right << setw(20) << matches[i].date << " | " << matches[i].time << "      |\n";
             cout << " ------------------------------------------------------\n";
             cout << "|                                                      |\n";
             cout << "|" << right << setw(22) << team1 << "    vs    " << left << setw(22) << team2 << "|\n";
@@ -195,9 +171,9 @@ void Display_past_matches()
 // Display_upcoming_matches
 void Display_upcoming_matches()
 {
-    cout << "******************************************************\n";
-    cout << "                     upcoming Matches                 \n";
-    cout << "******************************************************\n\n";
+    cout << "                ====================  \n";
+    cout << "               |  upcoming Matches  | \n";
+    cout << "                ====================  \n";
 
     for (int i = 0; i < matchesCount; i++)
     {
@@ -207,16 +183,28 @@ void Display_upcoming_matches()
         if (matches[i].status == "upcoming")
         {
             cout << " ------------------------------------------------------\n";
-            cout << "|  " << left << setw(10) << "status: " << matches[i].status << right << setw(25) << matches[i].date << " | " << matches[i].time << "     |\n";
+            cout << "|  status: " << left << setw(10) << matches[i].status << right << setw(20) << matches[i].date << " | " << matches[i].time << "      |\n";
             cout << " ------------------------------------------------------\n";
             cout << "|                                                      |\n";
             cout << "|" << right << setw(22) << team1 << "    vs    " << left << setw(22) << team2 << "|\n";
             cout << "|                                                      |\n";
-            cout << "|" << right << setw(22) << matches[i].score1 << "    --    " << left << setw(22) << matches[i].score2 << "|\n";
+            cout << "|" << "                    \"Not yet played\"                  |\n";
             cout << "|                                                      |\n";
             cout << " ------------------------------------------------------\n";
         }
     }
+}
+
+// Display_All_Matches
+void Display_All_Matches()
+{
+    cout << "******************************************************\n";
+    cout << "                     All Matches                      \n";
+    cout << "******************************************************\n\n";
+
+    Display_upcoming_matches();
+    Display_past_matches();
+
 }
 
 
@@ -313,25 +301,34 @@ void unfollow_team()
         }
             followCount--;
             RemoveUnderScore(teamNAME);
-            cout << "---------------------------------------------------------------\n";
+            cout << "--------------------------------------------------------\n";
             cout << "You are no longer following " << teamNAME << endl;
-            cout << "---------------------------------------------------------------\n";
+            cout << "--------------------------------------------------------\n";
 
 
-        
-            cout << "if you want to unfollow another team press \"r\"   or   (press \"x\" to exit )\n";
-            string options2;
-            cin >> options2;
-            if (options2 == "r" || options2 == "R")
+            while (true)
             {
-                check2 = false;
-
+                cout << "if you want to unfollow another team press \"r\"   or   (press \"x\" to exit )\n";
+                string options2;
+                cin >> options2;
+                if (options2 == "r" || options2 == "R")
+                {
+                    check2 = false;
+                    break;
+                }
+                else if (options2 == "x")
+                {
+                    check2 = true;
+                    break;
+                }
+                else
+                {
+                    cout << "****************\n";
+                    cout << " Invalid nimber \n";
+                    cout << "****************\n";
+                    cout << "please try again\n";
+                }
             }
-            else
-            {
-                check2 = true;
-            }
-        
     } 
 }
 
