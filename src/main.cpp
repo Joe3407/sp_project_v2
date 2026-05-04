@@ -1070,31 +1070,32 @@ void FollowTeam() {
     bool ChoiceValid=false;
     string Teams;
     string TeamName;
-    do {
-        cout<<"Which team would you like to follow ? (Or Enter 0 to return to main menu again): "<<endl;
-        for (int i = 0; i < teamsCount; i++) {
-            Teams = teams[i].name;
-            RemoveUnderScore(Teams);
-            cout<<i+1<<"."<<Teams<<endl;
-        }
-        cin>>TeamChoice;
-        if (cin.fail()) {
-            cin.clear();
-            cin.ignore(numeric_limits<streamsize>::max(), '\n');
-            cout << "Invalid input. Please enter a number." << endl;
-            continue;
-        }
+    while (true){
+        do {
+            cout<<"Which team would you like to follow ? (Or Enter 0 to return to main menu again): "<<endl;
+            for (int i = 0; i < teamsCount; i++) {
+                Teams = teams[i].name;
+                RemoveUnderScore(Teams);
+                cout<<i+1<<"."<<Teams<<endl;
+            }
+            cin>>TeamChoice;
+            if (cin.fail()) {
+                cin.clear();
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                cout << "Invalid input. Please enter a number." << endl;
+                continue;
+            }
 
-        if (cin.peek() != '\n') {
-            cin.ignore(numeric_limits<streamsize>::max(), '\n');
-            cout << "Invalid input. Please enter a number." << endl;
-            continue;
-        }
-        cin.ignore();
+            if (cin.peek() != '\n') {
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                cout << "Invalid input. Please enter a number." << endl;
+                continue;
+            }
+            cin.ignore();
 
-        if (TeamChoice ==0) {
-            break;
-        }
+            if (TeamChoice ==0) {
+                break;
+            }
             if (TeamChoice>0&&TeamChoice<=teamsCount) {
                 ChoiceValid=true;
                 if (check_team_infollow(TeamChoice)!=-1) {
@@ -1111,13 +1112,27 @@ void FollowTeam() {
                 }
             }
 
+            if (ChoiceValid==false) {
+                cout<<"Incorrect Number Entered Please Try again "<<endl;
+            }
 
-        if (ChoiceValid==false) {
-            cout<<"Incorrect Number Entered Please Try again "<<endl;
+
+        }while (ChoiceValid==false);
+        cout<<"Do you want to follow another team ? Y for yes and N for No"<<endl;
+        char Answer;
+        cin>>Answer;
+        if (Answer=='Y' || Answer=='y') {
+            continue;
+        }
+        else if (Answer=='N' || Answer=='n') {
+            break;
+        }
+        else {
+            cout<<"Incorrect Input , Please Try again" << endl;
+            continue;
         }
 
-
-    }while (ChoiceValid==false);
+    }
 }
 
 void FilterMatchesByTeam() {
