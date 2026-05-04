@@ -494,12 +494,14 @@ void UpdateMatchResult(){
 
 /////////////////////////////////////// print the upcoming matches
     cout<<"update match results"<<endl;
+
     bool upcoming = false ;
-    cout<<"current upcoming matches"<<endl;
+
+      cout<<"current upcoming matches"<<endl;
       for ( int i = 0 ; i < matchesCount ; i++ ){
 
         if( matches[i].status == "upcoming" ){
-            cout<<matches[i].team1<<" "<<matches[i].team2<<" "<<matches[i].date<<" "<<matches[i].time<<endl;
+            cout<<matches[i].team1<<" "<<matches[i].team2<<" "<<matches[i].date<<" "<<matches[i].time<<endl<<endl;
               upcoming = true ;
         }
     }
@@ -518,7 +520,7 @@ string input_team1 ;
 string input_team2 ;
 
 cout<<"enter team 1"<<endl;
-cin.ignore(numeric_limits<streamsize>::max(),'\n'); 
+cin.ignore(10000,'\n'); 
 getline(cin, input_team1);
 AddUnderScore(input_team1); //add underscore between the name
 
