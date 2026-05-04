@@ -229,7 +229,6 @@ int check_team_infollow(int TeamChoice)
     return -1;
 }
 
-
 // function to unfollow
 
 void unfollow_team()
@@ -1009,10 +1008,10 @@ void FollowTeam() {
         }
             if (TeamChoice>0&&TeamChoice<=teamsCount) {
                 ChoiceValid=true;
-                // if (check_team_infollow(TeamChoice)!=-1) {
-                //     cout<<"You are already following this team "<<endl;
-                //     break;
-                // }
+                if (check_team_infollow(TeamChoice)!=-1) {
+                    cout<<"You are already following this team "<<endl;
+                    break;
+                }
                 if (followCount<2000) {
                     follow[followCount].username=currentLoggedInUser;
                     follow[followCount].teamName=teams[TeamChoice-1].name;
