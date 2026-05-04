@@ -452,6 +452,7 @@ void AddUpcomingMatch()
             AddUnderScore(teamTwo);
 
 
+
             for (int i = 0; i < teamsCount; i++)
             {
                 if (teams[i].name == teamOne)
@@ -477,8 +478,38 @@ void AddUpcomingMatch()
 
         matches[matchesCount].team1 = teamOne;
         matches[matchesCount].team2 = teamTwo;
-        cout << "Enter match date (DD/MM/YYYY): " << endl;
-        cin >> matches[matchesCount].date;
+
+        int matchday, matchmonth, matchyear;
+        string matchDate;
+
+        cout << "Please enter the day on which this match will be played (1-31): " << endl;
+        cin >> matchday;
+        while (matchday < 1 || matchday > 31) 
+        {
+            cout << "Invalid day. Please enter a number between 1 and 31: ";
+            cin >> matchday;
+        }
+        cout << "Please enter the month in which this match will be played (1-12): " << endl;
+        cin >> matchmonth;
+        while (matchmonth < 1 || matchmonth > 12) 
+        {
+            cout << "Invalid month. Please enter a number between 1 and 12: ";
+            cin >> matchmonth;
+        }
+        cout << "Please enter the year in which this match will be played: " << endl;
+        cin >> matchyear;
+        while (matchyear < 2026) 
+        {
+            cout << "This date has already passed. Please enter a year number at least equal to 2026: ";
+            cin >> matchyear;
+        }
+
+        matchDate = to_string(matchday) + "/" + to_string(matchmonth) + "/" + to_string(matchyear);
+
+        cout << "The match date is set to: " << matchDate << endl;
+
+        matches[matchesCount].date = matchDate;
+
         matches[matchesCount].status = "upcoming";
         matches[matchesCount].score1 = 0;
         matches[matchesCount].score2 = 0;
