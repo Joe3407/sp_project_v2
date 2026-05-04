@@ -265,10 +265,12 @@ void unfollow_team()
             }
         }
         cout << "Which team would you like to unfollow ? (Or Enter 0 to return to main menu again): \n";
+        cout << "please enter\" the number\" of team in the menu\n";
+        cout << "----------- The teams you follow -----------\n";
         for (int i = 0; i < userFollowCount; i++) {
             teamNAME = follow[userFollowIndices[i]].teamName;
             RemoveUnderScore(teamNAME);
-            cout << i + 1 << "." << teamNAME << endl;
+            cout << i + 1 << ". " << teamNAME << endl;
         }
         cin >> number_of_team;
         if (cin.fail()) {
