@@ -40,7 +40,7 @@ struct Follow{
 };
 User users[100];
 int usersCount = 0;
-Team teams[20];
+Team teams[50];
 int teamsCount = 0;
 Match matches[200];
 int matchesCount = 0;
@@ -316,7 +316,7 @@ void unfollow_team()
                     check2 = false;
                     break;
                 }
-                else if (options2 == "x")
+                else if (options2 == "x" || options2 == "X")
                 {
                     check2 = true;
                     break;
@@ -324,7 +324,7 @@ void unfollow_team()
                 else
                 {
                     cout << "****************\n";
-                    cout << " Invalid nimber \n";
+                    cout << " Invalid Input \n";
                     cout << "****************\n";
                     cout << "please try again\n";
                 }
@@ -345,7 +345,7 @@ void AddTeam()
 
 
         //Making sure teams array limit has not been exceeded
-        if (teamsCount >= 20)
+        if (teamsCount >= 50)
         {
             cout << "Maximum number of teams already reached." << endl;
             return;
@@ -495,7 +495,8 @@ void AddUpcomingMatch()
 
 //////////////////////////////////////// update match result (function definition)
 void UpdateMatchResult(){
-
+    string ChangedName1;
+    string ChangedName2;
 /////////////////////////////////////// print the upcoming matches
     cout<<"update match results"<<endl;
 
@@ -503,9 +504,12 @@ void UpdateMatchResult(){
 
       cout<<"current upcoming matches"<<endl;
       for ( int i = 0 ; i < matchesCount ; i++ ){
-
+          ChangedName1=matches[i].team1;
+          ChangedName2=matches[i].team2;
+          RemoveUnderScore(ChangedName1);
+          RemoveUnderScore(ChangedName2);
         if( matches[i].status == "upcoming" ){
-            cout<<matches[i].team1<<" "<<matches[i].team2<<" "<<matches[i].date<<" "<<matches[i].time<<endl<<endl;
+            cout<<ChangedName1<<" "<<ChangedName2<<" "<<matches[i].date<<" "<<matches[i].time<<endl<<endl;
               upcoming = true ;
         }
     }
@@ -538,7 +542,10 @@ AddUnderScore(input_team2);
 bool matchfound = false ;
 
     for ( int i = 0 ; i < matchesCount ; i++ ){
-
+        ChangedName1=matches[i].team1;
+        ChangedName2=matches[i].team2;
+        RemoveUnderScore(ChangedName1);
+        RemoveUnderScore(ChangedName2);
         if (((matches[i].team1 == input_team1 && matches[i].team2 == input_team2) ||
 
         (matches[i].team1 == input_team2 && matches[i].team2 == input_team1)) &&
@@ -546,10 +553,10 @@ bool matchfound = false ;
         matches[i].status == "upcoming"){
 
           cout<<"Match found!"<<endl;
-          cout<<"Enter final score for "<< matches[i].team1<<endl;
+          cout<<"Enter final score for "<< ChangedName1<<endl;
           cin>>matches[i].score1;
 
-          cout<<"Enter final score for "<< matches[i].team2<<endl;
+          cout<<"Enter final score for "<< ChangedName2<<endl;
           cin>>matches[i].score2;
 
           matches[i].status = "past";
@@ -864,6 +871,8 @@ void Logout() {
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 // Moaz
 void displayfollowedmatch() {
+    string ChangedTeam1Name;
+    string ChangedTeam2Name;
     string followtemp[20];
     int j = 0;//counter to know each user number of follows
     bool flag = false;
@@ -900,13 +909,18 @@ void displayfollowedmatch() {
                 case 1: {
                     cout << "\t  Matches for followed teams\n";
                     for (int i = 0; i < matchesCount; i++) {//search followed teams on matches array
-                        for (int z = 0; z < j; z++) {
+                        for (int z = 0; z < j; z++){
                             if (matches[i].team1 == followtemp[z] || matches[i].team2 == followtemp[z]) {
-                                cout << "\t" << matches[i].team1 << " " << matches[i].score1
-                                     << "\t v.s \t" << matches[i].score2 << " " << matches[i].team2 << endl;
+                                ChangedTeam1Name=matches[i].team1;
+                                ChangedTeam2Name=matches[i].team2;
+                                RemoveUnderScore(ChangedTeam1Name);
+                                RemoveUnderScore(ChangedTeam2Name);
+                                cout << "\t" << ChangedTeam1Name << " " << matches[i].score1
+                                     << "\t v.s \t" << matches[i].score2 << " " << ChangedTeam2Name << endl;
                                 cout << "\t\t Date: " << matches[i].date << " | Time: " << matches[i].time << endl;
                                 break; // Prevent double printing if both teams are followed
                             }
+
                         }
                     }
                     break;
@@ -1105,14 +1119,19 @@ void FilterMatchesByTeam() {
             cout<<"Here are the matches of "<<" "<<DisplayName<<" "<< ":"<<endl;
             for (int j = 0;j<matchesCount;j++) {
                     if (teams[TeamChoice-1].name==matches[j].team1 || teams[TeamChoice-1].name==matches[j].team2) {
+                        string NewName1=matches[j].team1;
+                        string NewName2=matches[j].team2;
+                        RemoveUnderScore(NewName1);
+                        RemoveUnderScore(NewName2);
                         cout<<"Date : "<<matches[j].date<<endl;
-                        cout<<matches[j].team1 <<" "<<"Vs"<<" "<<matches[j].team2 <<endl;
+                        cout<<NewName1 <<" "<<"Vs"<<" "<<NewName2 <<endl;
                         cout<<"Status : "<<matches[j].status<<endl;
 
                         if (matches[j].status=="past" ) {
                             cout<<"Score : " <<matches[j].score1<<"--"<<matches[j].score2<<endl;
                         } else cout<<"Match is yet to be played"<<endl;
                     }
+                        cout<<endl;;
                 }
             }
         if (ChoiceValid==false) {
@@ -1159,7 +1178,7 @@ void AdminMenu() {
         <<"2. Remove a team"<<endl
         <<"3. Add an upcoming match"<<endl
         <<"4. Update match results "<<endl
-        <<"5. to logout"<<endl;
+        <<"5. Logout"<<endl;
         cin>>ChoiceAdmin;
         if (ChoiceAdmin==1){
             AddTeam();
