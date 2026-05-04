@@ -938,15 +938,17 @@ void displayfollowedmatch() {
                 case 1: {
                     cout << "\t  Matches for followed teams\n";\
                     cout << "\t ======================================\n";
-                    int option;
-
                         for (int i = 0; i < matchesCount; i++) {//search followed teams on matches array
                             for (int z = 0; z < j; z++) {
                                 if (matches[i].team1 == followtemp[z] || matches[i].team2 == followtemp[z]) {
                                     cout<<"\t";
+                                    ChangedTeam1Name=matches[i].team1;
+                                    ChangedTeam2Name=matches[i].team2;
+                                    RemoveUnderScore(ChangedTeam1Name);
+                                    RemoveUnderScore(ChangedTeam2Name);
                                     if (matches[i].status=="past")
-                                        cout<<matches[i].team1<<" "<<matches[i].score1<<"\t"<<"v.s\t"<<matches[i].score2<<" "<<matches[i].team2<<endl;
-                                    else cout<<matches[i].team1<<"\t"<<"v.s\t"<<matches[i].team2<<endl;
+                                        cout<< ChangedTeam1Name<<" "<<matches[i].score1<<"\t"<<"v.s\t"<<matches[i].score2<<" "<< ChangedTeam2Name<<endl;
+                                    else cout<< ChangedTeam1Name<<"\t"<<"v.s\t"<< ChangedTeam2Name<<endl;
                                     cout << "\t\t Date: " << matches[i].date<<endl << " \t\t Time:   " << matches[i].time << endl;
                                     cout << "\t -------------------------------------\n";
                                     break; // Prevent double printing if both teams are followed
@@ -966,7 +968,6 @@ void displayfollowedmatch() {
                                 teamStillExists = true;
                                 string ChangedCoachName = teams[z].coach;
                                 string ChangedTeamName = teams[z].name;
-
                                 RemoveUnderScore(ChangedCoachName);
                                 RemoveUnderScore(ChangedTeamName);
 
@@ -1047,9 +1048,13 @@ void gameoftheweek() {//extra function
     cout << "\n******************************************" << endl;
     cout << "         GAME OF THE WEEK             " << endl;
     cout << "******************************************" << endl;
+    ChangedName_1=matches[matchhnum].team1;
+    ChangedName_2=matches[matchhnum].team2;
+    RemoveUnderScore(ChangedName_1);
+    RemoveUnderScore(ChangedName_2);
     if (matches[matchhnum].status=="past")
-        cout<<matches[matchhnum].team1<<" "<<matches[matchhnum].score1<<"\t"<<"v.s\t"<<matches[matchhnum].score2<<" "<<matches[matchhnum].team2<<endl;
-    else cout<<matches[matchhnum].team1<<"\t"<<"v.s\t"<<matches[matchhnum].team2<<endl;
+        cout<<ChangedName_1<<" "<<matches[matchhnum].score1<<"\t"<<"v.s\t"<<matches[matchhnum].score2<<" "<<ChangedName_2<<endl;
+    else cout<<ChangedName_1<<"\t"<<"v.s\t"<<ChangedName_2<<endl;
     cout<<"\t"<<"Date is : "<<matches[matchhnum].date<<endl;
     cout<<"\t"<<"Time is :   "<<matches[matchhnum].time<<endl;
     cout << "******************************************" << endl;
@@ -1144,6 +1149,7 @@ void FilterMatchesByTeam() {
             cout<<"Here are the matches of "<<" "<<DisplayName<<" "<< ":"<<endl;
             for (int j = 0;j<matchesCount;j++) {
                     if (teams[TeamChoice-1].name==matches[j].team1 || teams[TeamChoice-1].name==matches[j].team2) {
+                        cout << "\n======================================\n";
                         string NewName1=matches[j].team1;
                         string NewName2=matches[j].team2;
                         RemoveUnderScore(NewName1);
@@ -1154,9 +1160,14 @@ void FilterMatchesByTeam() {
 
                         if (matches[j].status=="past" ) {
                             cout<<"Score : " <<matches[j].score1<<"--"<<matches[j].score2<<endl;
-                        } else cout<<"Match is yet to be played"<<endl;
+                            cout << "\n======================================\n";
+                        }
+                        else {
+                            cout<<"Match is yet to be played"<<endl;
+                            cout << "\n======================================\n";
+                        }
                     }
-                        cout<<endl;;
+
                 }
             }
         if (ChoiceValid==false) {
