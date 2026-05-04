@@ -871,8 +871,6 @@ void Logout() {
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 // Moaz
 void displayfollowedmatch() {
-    string ChangedTeam1Name;
-    string ChangedTeam2Name;
     string followtemp[20];
     int j = 0;//counter to know each user number of follows
     bool flag = false;
@@ -907,26 +905,29 @@ void displayfollowedmatch() {
 
             switch (choice) {
                 case 1: {
-                    cout << "\t  Matches for followed teams\n";
-                    for (int i = 0; i < matchesCount; i++) {//search followed teams on matches array
-                        for (int z = 0; z < j; z++){
-                            if (matches[i].team1 == followtemp[z] || matches[i].team2 == followtemp[z]) {
-                                ChangedTeam1Name=matches[i].team1;
-                                ChangedTeam2Name=matches[i].team2;
-                                RemoveUnderScore(ChangedTeam1Name);
-                                RemoveUnderScore(ChangedTeam2Name);
-                                cout << "\t" << ChangedTeam1Name << " " << matches[i].score1
-                                     << "\t v.s \t" << matches[i].score2 << " " << ChangedTeam2Name << endl;
-                                cout << "\t\t Date: " << matches[i].date << " | Time: " << matches[i].time << endl;
-                                break; // Prevent double printing if both teams are followed
-                            }
+                    cout << "\t  Matches for followed teams\n";\
+                    cout << "\t ======================================\n";
+                    int option;
 
+                        for (int i = 0; i < matchesCount; i++) {//search followed teams on matches array
+                            for (int z = 0; z < j; z++) {
+                                if (matches[i].team1 == followtemp[z] || matches[i].team2 == followtemp[z]) {
+                                    cout<<"\t";
+                                    if (matches[i].status=="past")
+                                        cout<<matches[i].team1<<" "<<matches[i].score1<<"\t"<<"v.s\t"<<matches[i].score2<<" "<<matches[i].team2<<endl;
+                                    else cout<<matches[i].team1<<"\t"<<"v.s\t"<<matches[i].team2<<endl;
+                                    cout << "\t\t Date: " << matches[i].date<<endl << " \t\t Time:   " << matches[i].time << endl;
+                                    cout << "\t -------------------------------------\n";
+                                    break; // Prevent double printing if both teams are followed
+                                }
+                            }
                         }
-                    }
-                    break;
+                        break;
+
                 }
                 case 2: {
-                    cout << "********************** Feed for fav Teams ****************\n";
+                    cout << "\t Feed for fav Teams\n";
+                    cout << "=========================================\n";
                     for (int i = 0; i < j; i++) {
                         bool teamStillExists = false;
                         for (int z = 0; z < teamsCount; z++) {
@@ -934,7 +935,7 @@ void displayfollowedmatch() {
                                 teamStillExists = true;
                                 string ChangedCoachName = teams[z].coach;
                                 string ChangedTeamName = teams[z].name;
-                                
+
                                 RemoveUnderScore(ChangedCoachName);
                                 RemoveUnderScore(ChangedTeamName);
 
@@ -1007,8 +1008,6 @@ void RemoveTeam() {
 }
 
 void gameoftheweek() {//extra function
-    string ChangedName_1;
-    string ChangedName_2;
     if (matchesCount == 0) {
         cout << "\n[Notice] No matches scheduled yet for the Game of the Week.\n";
         return;
@@ -1017,18 +1016,13 @@ void gameoftheweek() {//extra function
     cout << "\n******************************************" << endl;
     cout << "         GAME OF THE WEEK             " << endl;
     cout << "******************************************" << endl;
-    ChangedName_1=matches[matchhnum].team1;
-    ChangedName_2=matches[matchhnum].team2;
-    RemoveUnderScore(ChangedName_1);
-    RemoveUnderScore(ChangedName_2);
-    if (matches[matchhnum].status=="past") {
-        cout<<ChangedName_1<<" "<<matches[matchhnum].score1<<"\t"<<"v.s\t"<<matches[matchhnum].score2<<" "<<ChangedName_2<<endl;
-    }
-    else cout<<ChangedName_1<<"\t"<<"v.s\t"<<ChangedName_2<<endl;
+    if (matches[matchhnum].status=="past")
+        cout<<matches[matchhnum].team1<<" "<<matches[matchhnum].score1<<"\t"<<"v.s\t"<<matches[matchhnum].score2<<" "<<matches[matchhnum].team2<<endl;
+    else cout<<matches[matchhnum].team1<<"\t"<<"v.s\t"<<matches[matchhnum].team2<<endl;
     cout<<"\t"<<"Date is : "<<matches[matchhnum].date<<endl;
+    cout<<"\t"<<"Time is :   "<<matches[matchhnum].time<<endl;
     cout << "******************************************" << endl;
-}
-//--------------------------------------------------------------
+}//--------------------------------------------------------------
 //Muhammad
 void FollowTeam() {
     int TeamChoice;
