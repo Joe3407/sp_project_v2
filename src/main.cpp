@@ -1,13 +1,13 @@
 #include <iostream>
 #include <fstream>
 #include <string>
-#include <conio.h>  // for password
-#include <iomanip>  // for function "setw"
-#include <limits>   // for user input more than the amount needed
-#include <cctype>   // for tolower
-#include <algorithm> // for swap
-#include <ctime>   // Necessary for time()
-#include <cstdlib> // Necessary for rand() and srand()
+#include <conio.h>    // for password
+#include <iomanip>    // for function "setw"
+#include <limits>     // for user input more than the amount needed
+#include <cctype>     // for tolower
+#include <algorithm>  // for swap
+#include <ctime>      // Necessary for time()
+#include <cstdlib>    // Necessary for rand() and srand()
 using namespace std;
 //------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 //Ibrahim :
@@ -15,9 +15,9 @@ using namespace std;
 // Declaring Structs and Variables
 struct User{
     string username;
-    string password;
+    string passwordHash;
     string role;
-
+    string salt;
 };
 struct Team{
     string name;
@@ -61,7 +61,7 @@ void SaveData(){
     // Saving Users
     ofstream userFile("users.txt");
     for (int i = 0; i < usersCount; i++){
-        userFile << users[i].username << " " << users[i].password << " " << users[i].role << endl;
+        userFile << users[i].username << " " << users[i].passwordHash << " " << users[i].role << " " << users[i].salt << endl;
     }
     userFile.close();
 
@@ -93,7 +93,7 @@ void LoadData() {
     // Loading Users
     ifstream userFile("users.txt");
     if (userFile.is_open()) {
-        while (userFile >> users[usersCount].username >> users[usersCount].password >> users[usersCount].role) {
+        while (userFile >> users[usersCount].username >> users[usersCount].passwordHash >> users[usersCount].role >> users[usersCount].salt) {
             usersCount++;
         }
         userFile.close();
@@ -651,7 +651,33 @@ for (int i = 0 ; i < teamsCount-1  ; i++){
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 // Joe
 
+string generateSalt() {
+
+    const string chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+
+    string salt = "";
+
+    for (int i = 0; i < 10; i++) {
+        int idx = rand() % chars.size();
+        salt += chars[idx];
+    }
+
+    return salt;
+}
+
+long long hashPassword(string password) {
+
+    long long hashValue = 0, prime = 31, mod = 1e9 + 7;
+
+    for (auto c : password) {
+        hashValue = (hashValue * prime + c) % mod;
+    }
+
+    return hashValue;
+}
+
 string inputPassword() {
+
     string password = "";
     int ch;
 
@@ -678,22 +704,19 @@ string inputPassword() {
 }
 
 void Register() {
+
     User newUser;
 
-    // SIZECHECK
+    //SIZECHECK
     if (usersCount >= 100) {
         cout << "User limit reached!\n";
         return;
     }
 
-    // SAFETYCHECK
-    cin.ignore(numeric_limits<streamsize>::max(), '\n'); // ignores everything till it finds \n
-
-    // USERNAME
     while (true) {
 
         cout << "Enter username (or 0 to cancel): ";
-        getline(cin, newUser.username);
+        cin >> newUser.username;
 
         if (newUser.username == "0") {
             cout << "Registration canceled!\n";
@@ -713,18 +736,19 @@ void Register() {
     }
 
 
-    // PASSWORD
+    //PASSWORD
+    string password;
     while (true) {
 
         cout << "Enter password (or 0 to cancel): ";
-        newUser.password = inputPassword();
+        password = inputPassword();
 
-        if (newUser.password == "0") {
+        if (password == "0") {
             cout << "Registration canceled!\n";
             return;
         }
 
-        if (newUser.password.length() < 4) {
+        if (password.length() < 4) {
             cout << "Password too short!\n";
         }
         else {
@@ -733,7 +757,7 @@ void Register() {
     }
 
 
-    // ROLE
+    //ROLE
     while (true) {
 
         cout << "Enter role (admin/user) (or 0 to cancel): ";
@@ -755,6 +779,11 @@ void Register() {
         cout << "Invalid role! Please enter admin or user.\n";
     }
 
+    //HASH
+    string salt = generateSalt();
+    newUser.salt = salt;
+    newUser.passwordHash = to_string(hashPassword(password + salt));
+
     //SAVEUSER
     users[usersCount] = newUser;
     usersCount++;
@@ -764,15 +793,12 @@ void Register() {
 
 void Login() {
 
-    // SAFETYCHECK
-    cin.ignore(numeric_limits<streamsize>::max(), '\n');
-
     while (true) {
 
         string username, password;
 
         cout << "Enter username (or 0 to cancel): ";
-        getline(cin, username);
+        cin >> username;
 
         if (username == "0") {
             cout << "Login canceled!\n";
@@ -788,7 +814,7 @@ void Login() {
         }
 
         for (int i = 0; i < usersCount; i++) {
-            if (users[i].username == username && users[i].password == password) {
+            if (users[i].username == username && users[i].passwordHash == to_string(hashPassword(password + users[i].salt))) {
 
                 currentLoggedInUser = username;
                 currentUserRole = users[i].role;
@@ -802,10 +828,11 @@ void Login() {
         cout << "Invalid username or password!\n";
 
         while (true) {
+
             char choice;
+
             cout << "Try again? (y/n): ";
             cin >> choice;
-            cin.ignore(numeric_limits<streamsize>::max(), '\n');
 
             if (choice != 'n' && choice != 'N' && choice != 'y' && choice != 'Y') {
                 cout << "Invalid choice!\n";
@@ -822,6 +849,7 @@ void Login() {
 }
 
 void Logout() {
+
     currentLoggedInUser = "";
     currentUserRole = "";
 
@@ -1197,7 +1225,7 @@ void UserMenu() {
 }
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 int main() {
-   srand(static_cast<unsigned int>(time(0)));
+    srand(static_cast<unsigned int>(time(0)));
     LoadData();
     cout<<"Welcome to CounterAttack ! "<<endl;;
     cout<<" The number 1 app for all Football team news regarding your favorite teams and world-wide football"<<endl;
