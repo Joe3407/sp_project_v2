@@ -630,12 +630,12 @@ for (int i = 0 ; i < teamsCount-1  ; i++){
 
 
     for(int i = 0; i < teamsCount; i++){
-        ChangedName = teams[i].name;
-        RemoveUnderScore(ChangedName);
-        cout<<left<<setw(10)<<(i + 1)
-            <<setw(20)<<teams[i].name
-            <<setw(15)<<teams[i].totalPoints
-            <<setw(10)<<teams[i].titles<<endl;
+         ChangedName = teams[i].name;
+         RemoveUnderScore(ChangedName);
+         cout<<left<<setw(10)<<(i + 1)
+             <<setw(20)<<ChangedName
+             <<setw(15)<<teams[i].totalPoints
+             <<setw(10)<<teams[i].titles<<endl;
     }
     cout<<"========================================================"<<endl;
 
