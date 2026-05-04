@@ -233,7 +233,7 @@ void unfollow_team()
     string teamNAME;
     while (check2 == false)
     {
-       
+
 
         if (followCount == 0)
         {
@@ -286,14 +286,14 @@ void unfollow_team()
                 continue;
         }
         number_of_team--;
-        
+
        int actual_index = userFollowIndices[number_of_team];
-        
+
         teamNAME = follow[actual_index].teamName;
 
         follow[actual_index].teamName = "";
         follow[actual_index].username = "";
-         
+
         for (int j = actual_index; j < followCount - 1; j++)
         {
                 follow[j].teamName = follow[j + 1].teamName;
@@ -329,7 +329,7 @@ void unfollow_team()
                     cout << "please try again\n";
                 }
             }
-    } 
+    }
 }
 
 
@@ -484,21 +484,21 @@ void AddUpcomingMatch()
 
         cout << "Please enter the day on which this match will be played (1-31): " << endl;
         cin >> matchday;
-        while (matchday < 1 || matchday > 31) 
+        while (matchday < 1 || matchday > 31)
         {
             cout << "Invalid day. Please enter a number between 1 and 31: ";
             cin >> matchday;
         }
         cout << "Please enter the month in which this match will be played (1-12): " << endl;
         cin >> matchmonth;
-        while (matchmonth < 1 || matchmonth > 12) 
+        while (matchmonth < 1 || matchmonth > 12)
         {
             cout << "Invalid month. Please enter a number between 1 and 12: ";
             cin >> matchmonth;
         }
         cout << "Please enter the year in which this match will be played: " << endl;
         cin >> matchyear;
-        while (matchyear < 2026) 
+        while (matchyear < 2026)
         {
             cout << "This date has already passed. Please enter a year number at least equal to 2026: ";
             cin >> matchyear;
@@ -559,7 +559,7 @@ string input_team1 ;
 string input_team2 ;
 
 cout<<"enter team 1"<<endl;
-cin.ignore(10000,'\n'); 
+cin.ignore(10000,'\n');
 getline(cin, input_team1);
 AddUnderScore(input_team1); //add underscore between the name
 
@@ -1094,7 +1094,7 @@ void FollowTeam() {
             cin.ignore();
 
             if (TeamChoice ==0) {
-                break;
+                return;
             }
             if (TeamChoice>0&&TeamChoice<=teamsCount) {
                 ChoiceValid=true;
@@ -1138,36 +1138,37 @@ void FollowTeam() {
 void FilterMatchesByTeam() {
     int TeamChoice;
     bool ChoiceValid = false;
-    string Teams;;
-    do{
-        cout<<"Which team do you want to view their matches ? (Or Enter 0 to return to main menu again):"<<" "<<endl;
-        for (int i=0;i<teamsCount;i++) {
-            Teams=teams[i].name;
-            RemoveUnderScore(Teams);
-            cout<<i+1<<"."<<Teams<<endl;
-        }
-        cin >> TeamChoice;
-        if (cin.fail()) {   //dey bthandle el 7agat ely feeha char or string
-            cin.clear(); //cinfail feeha switches lma el input is wrong they are set as ON w el function wont work , cinclear bt2ool el cin en el denya tmam u can take input agian
-            cin.ignore(numeric_limits<streamsize>::max(), '\n'); // btsheel all inputs le7ad el backslash n
-            cout << "Invalid input. Please enter a number." << endl;
-            continue;
-        }
-        if (cin.peek() != '\n') {  //cinpeek betbos 3ala next cahracter fel input 3ala tool lw fee 7aga 8eer \n el if block bnd5ol feeh     \\handles inputs zey 1a el 1 saved fel cin w el a byt3melha delete hena
-            cin.ignore(numeric_limits<streamsize>::max(), '\n');
-            cout << "Invalid input. Please enter a number only." << endl;
-            continue;
-        }
-        cin.ignore();// law el input sa7 lazem nsheel el /n men el a5er 3lshan next cin ma tedrabesh
-        if (TeamChoice==0) {
-            break;
-        }
-        if (TeamChoice>0&&TeamChoice<=teamsCount) {
-            ChoiceValid=true;
-            string DisplayName=teams[TeamChoice-1].name;
-            RemoveUnderScore(DisplayName);
-            cout<<"Here are the matches of "<<" "<<DisplayName<<" "<< ":"<<endl;
-            for (int j = 0;j<matchesCount;j++) {
+    string Teams;
+    while (true) {
+        do{
+            cout<<"Which team do you want to view their matches ? (Or Enter 0 to return to main menu again):"<<" "<<endl;
+            for (int i=0;i<teamsCount;i++) {
+                Teams=teams[i].name;
+                RemoveUnderScore(Teams);
+                cout<<i+1<<"."<<Teams<<endl;
+            }
+            cin >> TeamChoice;
+            if (cin.fail()) {   //dey bthandle el 7agat ely feeha char or string
+                cin.clear(); //cinfail feeha switches lma el input is wrong they are set as ON w el function wont work , cinclear bt2ool el cin en el denya tmam u can take input agian
+                cin.ignore(numeric_limits<streamsize>::max(), '\n'); // btsheel all inputs le7ad el backslash n
+                cout << "Invalid input. Please enter a number." << endl;
+                continue;
+            }
+            if (cin.peek() != '\n') {  //cinpeek betbos 3ala next cahracter fel input 3ala tool lw fee 7aga 8eer \n el if block bnd5ol feeh     \\handles inputs zey 1a el 1 saved fel cin w el a byt3melha delete hena
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                cout << "Invalid input. Please enter a number only." << endl;
+                continue;
+            }
+            cin.ignore();// law el input sa7 lazem nsheel el /n men el a5er 3lshan next cin ma tedrabesh
+            if (TeamChoice==0) {
+                return;;
+            }
+            if (TeamChoice>0&&TeamChoice<=teamsCount) {
+                ChoiceValid=true;
+                string DisplayName=teams[TeamChoice-1].name;
+                RemoveUnderScore(DisplayName);
+                cout<<"Here are the matches of "<<" "<<DisplayName<<" "<< ":"<<endl;
+                for (int j = 0;j<matchesCount;j++) {
                     if (teams[TeamChoice-1].name==matches[j].team1 || teams[TeamChoice-1].name==matches[j].team2) {
                         cout << "\n======================================\n";
                         string NewName1=matches[j].team1;
@@ -1190,30 +1191,42 @@ void FilterMatchesByTeam() {
 
                 }
             }
-        if (ChoiceValid==false) {
-            cout<<"Incorrect Number Entered Please Try again "<<endl;
+            if (ChoiceValid==false) {
+                cout<<"Incorrect Number Entered Please Try again "<<endl;
+            }
+        }while (ChoiceValid == false);
+        cout<<"Do you want to view another team's matches ? Y for yes and N for No"<<endl;
+        char Answer;
+        cin>>Answer;
+        if (Answer=='Y' || Answer=='y') {
+            continue;
         }
-    }while (ChoiceValid == false);
+        else if (Answer=='N' || Answer=='n') {
+            break;
+        }
+        else {
+            cout<<"Incorrect Input , Please Try again" << endl;
+            continue;
+        }
+    }
 }
 
 string MainMenuOption() {
-    cout<<"Press 1 to Sign up."<<endl;
-    cout<<"Already have an account ? Press 2 to sign in. "<<endl;
     string result;
     while (true) {
+        cout<<"Press 1 to Sign up."<<endl;
+        cout<<"Already have an account ? Press 2 to sign in. "<<endl;
         cin>>result;
         if (result == "1"||result=="2") {
             return result;
         }   cout<<"Incorrect option , please Try again "<<endl;
-        cout<<"Are you a user ? Press 1 to sign in to your account"<<endl;
-        cout<<"Are you an admin ? Press 2 to sign in to your account"<<endl;
     }
 }
 
 bool AskToContinue() {
     char answer;
-    cout<<"Would you like to continue using the app ? Press Y if yes , N if no "<<"   ";
     while (true) {
+        cout<<"Would you like to continue using the app ? Press Y if yes , N if no "<<"   ";
         cin>>answer;
         if (answer == 'N' || answer == 'n') {
             cout<<"Thank you for using our football app !"<<endl<<" Make sure to check again for the lastest news regarding your favorite team."<<endl;
